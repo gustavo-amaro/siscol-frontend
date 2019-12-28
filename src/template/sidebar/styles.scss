@@ -7,10 +7,11 @@
     flex-direction: column;
     align-items: center;
     transition: all .5s;
+    animation: name duration timing-function delay iteration-count direction fill-mode;
     .brand{
+        display: flex;
         padding: 20px 0;
         .icon{
-            position: absolute;
             left: 40px;
             font-size: 2em;
             margin: 0;
@@ -43,6 +44,33 @@
         a{
             width: 100%;
             text-align: center;
+        }
+        .showSidebar{
+            animation-name: moveShow;
+            animation-duration: 400ms;
+            animation-fill-mode: forwards;
+        }
+        .hideSidebar{
+            animation-name: moveHide;
+            animation-duration: 400ms;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    @keyframes moveShow {
+        from{
+            //transform: translateX(-100%);
+            width: 0px;
+        }to{
+            //transform: translateX(0%);
+            width: 300px;
+        }
+    }
+    @keyframes moveHide {
+        from{
+            width: 300px;
+        }to{
+            width: 0px;
         }
     }
 }

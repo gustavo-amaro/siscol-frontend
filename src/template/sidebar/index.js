@@ -9,25 +9,24 @@ export default function Sidebar(){
     const [contentSidebar, setContentSidebar] = useState(null);
 
     useEffect(()=>{
-        let sidebar;
+        let sidebar = document.querySelector('.sidebar');
         if(show){
-            sidebar = document.querySelector('.sidebar');
-            sidebar.style.display = "flex";
-            setTimeout(()=>{
-                sidebar.style.width = "300px";
-                if(contentSidebar!==null)
-                    sidebar.innerHTML = contentSidebar;
-            }, 100)
+            sidebar.style.display = 'flex';
+            sidebar.style.animation = "moveShow 400ms";
+            sidebar.style.animationFillMode = "forwards";
         }else{
-            sidebar = document.querySelector('.sidebar');
-            setContentSidebar(sidebar.innerHTML);
-            sidebar.style.width = "0";
-            sidebar.innerHTML = "";
-            setTimeout(()=>{
-                sidebar.style.display = "none";
-            }, 500)
+            sidebar.style.animation = "moveHide 400ms";
+            sidebar.style.animationFillMode = "forwards";
         }
     }, [show]);
+    useEffect(() =>{
+        let sidebar = document.querySelector('.sidebar');
+        sidebar.addEventListener("animationend", (event) =>{
+             if(event.animationName === 'moveHide'){
+                sidebar.style.display = 'none';
+            }
+        });
+    }, [])
     return (
         <div className="sidebar">
             <div className="brand">

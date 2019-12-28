@@ -8,7 +8,7 @@ export default function Topbar(){
     useEffect(()=>{
         var elems = document.querySelectorAll('.dropdown-trigger');
         M.Dropdown.init(elems, {constrainWidth:false});
-    })
+    }, [])
     function toggleSidebar(e){
         e.preventDefault();
         dispatch({type: 'TOGGLE_SIDEBAR'})
@@ -16,7 +16,7 @@ export default function Topbar(){
     return (
         <nav>
             <div className="nav-wrapper blue">
-                <ul id="nav-mobile" className="left hide-on-med-and-down">
+                <ul id="nav-mobile" className="left">
                     <li><a onClick={toggleSidebar}><FaBars /></a></li>
                 </ul>
                 <ul id="nav-mobile" className="right">
