@@ -1,0 +1,26 @@
+@keyframes fade{
+    from{
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes moveShow {
+    from{
+        //transform: translateX(-100%);
+        width: 0px;
+    }to{
+        //transform: translateX(0%);
+        width: 300px;
+    }
+}
+@keyframes moveHide {
+    from{
+        width: 300px;
+    }to{
+        width: 0px;
+    }
+}

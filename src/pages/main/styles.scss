@@ -1,11 +1,33 @@
+@import '../../animations.scss';
 .fragment{
     border-left: 3px solid;
     border-radius: 5px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    animation: fade 500ms;
+    animation-delay: 400ms;
+    animation-fill-mode: backwards;
+    .icon{
+        font-size: 3em;
+    }
+    .card-content{
+        margin-left: 20px;
+        h2{
+            font-size: 1em;
+            color: black;
+            font-weight: bold;
+        }
+        span{
+            color: black;
+        }
+    }
 }
 .border-teal{
     border-color: #009688;
+    color: #009688;
 }
 .border-purple{
     border-color: #9c27b0;
+    color: #9c27b0;
 }

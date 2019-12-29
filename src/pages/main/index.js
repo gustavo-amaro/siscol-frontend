@@ -1,29 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import {FaUser, FaDollarSign} from 'react-icons/fa';
 import "./styles.scss";
 import api from '../../services/api';
 
 export default function Main(){
     const [totalFiliados, setTotalFiliados] = useState(0);
-    useEffect(async ()=>{
+    async function getTotalFiliados(){
         const response = await api.get('/pescadores/registros/total/');
-        console.log(response.data);
-        //setTotalFiliados(response.data)
+        setTotalFiliados(response.data.count)
+    }
+    useEffect(()=>{
+        document.title = 'Principal'
+        getTotalFiliados();
     }, []);
     return(
         <div className="container-fluid">
             <div className="row">
 
-                <div className="col m4 s12">
+                <div className="col l4 m6 s12">
                     <div className="card-panel fragment border-teal">
-                        <p>Quantidade de filiados</p>
-                        <span>{totalFiliados}</span>
+                        <div className="icon">
+                            <FaUser />
+                        </div>
+                        <div className="card-content">
+                            <h2>Quantidade de filiados</h2>
+                            <span>{totalFiliados}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div className="col m4 s12">
-                    <div className="card-panel fragment border-purple">
-                        <p>Total Arrecado(Mês)</p>
-                        <span>R$1.000</span>
+                <div className="col l4 m6 s12">
+                    <div className="card-panel fragment border-teal">
+                        <div className="icon">
+                            <FaDollarSign />
+                        </div>
+                        <div className="card-content">
+                            <h2>Total Arrecado(Mês)</h2>
+                            <span>R$1.000</span>
+                        </div>
                     </div> 
                 </div>
 

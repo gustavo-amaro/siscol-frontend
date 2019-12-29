@@ -1,3 +1,4 @@
+@import '../../animations.scss';
 .sidebar{
     box-sizing: border-box;
     border-right: 1px solid #ccc;
@@ -54,23 +55,6 @@
             animation-name: moveHide;
             animation-duration: 400ms;
             animation-fill-mode: forwards;
-        }
-    }
-
-    @keyframes moveShow {
-        from{
-            //transform: translateX(-100%);
-            width: 0px;
-        }to{
-            //transform: translateX(0%);
-            width: 300px;
-        }
-    }
-    @keyframes moveHide {
-        from{
-            width: 300px;
-        }to{
-            width: 0px;
         }
     }
 }

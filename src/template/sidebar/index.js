@@ -3,10 +3,10 @@ import './styles.scss';
 import {FaFish} from 'react-icons/fa';
 import Divider from '../../components/divider';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function Sidebar(){
     const show = useSelector(state=>state.SidebarReducer.showSidebar);
-    const [contentSidebar, setContentSidebar] = useState(null);
 
     useEffect(()=>{
         let sidebar = document.querySelector('.sidebar');
@@ -35,12 +35,12 @@ export default function Sidebar(){
             </div>
             <Divider />
             <ul>
-                <li className="waves-effect"><a href="fake">Dashboard</a></li>
+                <li ><Link to="/">Início</Link></li>
                 <Divider />
-                <li className="waves-effect"><a href="fake">Pescador</a></li>
-                <li className="waves-effect"><a href="fake">Anuidade</a></li>
+                <li ><Link to="/pescador">Pescador</Link></li>
+                <li ><a href="fake">Anuidade</a></li>
                 <Divider />
-                <li className="waves-effect"><a href="fake">Relatórios</a></li>
+                <li ><a href="fake">Relatórios</a></li>
             </ul>
         </div>
     );
