@@ -1,7 +1,9 @@
 @import '../../animations.scss';
-
 .animate{
     animation: fade 400ms;
     animation-fill-mode: backwards;
     animation-delay: 400ms;
+}
+.table-rounded{
+    border-radius: 5px;
 }

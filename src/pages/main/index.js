@@ -5,13 +5,19 @@ import api from '../../services/api';
 
 export default function Main(){
     const [totalFiliados, setTotalFiliados] = useState(0);
+    const [totalMensal, setTotalMensal] = useState(0);
     async function getTotalFiliados(){
         const response = await api.get('/pescadores/registros/total/');
         setTotalFiliados(response.data.count)
     }
+    async function getTotalMensal(){
+        const response = await api.post('/guia/totalMensal/');
+        setTotalMensal(response.data);
+    }
     useEffect(()=>{
         document.title = 'Principal'
         getTotalFiliados();
+        getTotalMensal();
     }, []);
     return(
         <div className="container-fluid">
@@ -36,7 +42,7 @@ export default function Main(){
                         </div>
                         <div className="card-content">
                             <h2>Total Arrecado(Mês)</h2>
-                            <span>R$1.000</span>
+                            <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalMensal)}</span>
                         </div>
                     </div> 
                 </div>
