@@ -1,50 +1,57 @@
 @import '../../animations.scss';
 .sidebar{
     box-sizing: border-box;
-    border-right: 1px solid #ccc;
     height: 100%;
-    width: 300px;
+    width: 230px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: all .5s;
+    background-color: #333;
     animation: name duration timing-function delay iteration-count direction fill-mode;
     .brand{
         display: flex;
-        padding: 20px 0;
+        width: 100%;
+        height: 63px;
+        line-height: 0px;
+        align-items: center;
+        justify-content: center;
         .icon{
             left: 40px;
             font-size: 2em;
             margin: 0;
             padding: 0;
-            color: rgb(82, 73, 73);
             transform: rotate(-45deg);
         }
         .title{
-            font-size: 1.5em;
-            color: rgb(82, 73, 73);
+            font-size: 15pt;
         }
     }
     ul{
         width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        margin-top: 0!important;
+        .header{
+            background-color: #1a2226;
+            margin-top: 0;
+            color: #4b646f!important;
+        }
     }
     li{
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
+        padding: 7px;
+        padding-left: 15px;
         transition: all .4s;
-        font-size: 1.4em;
+        font-size: 12pt;
         width: 100%;
         &:hover{
-            background: #ccc;
+            background: rgba($color: #000000, $alpha: 0.2);
+            color: #fff;
         }
         a{
             width: 100%;
-            text-align: center;
+            color: #b8c7ce;
         }
         .showSidebar{
             animation-name: moveShow;

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
-import {FaFish} from 'react-icons/fa';
+import {
+    FaFish, 
+    FaHome, 
+    FaSwimmer, 
+    FaMoneyCheckAlt,
+    FaChartBar
+    } from 'react-icons/fa';
 import Divider from '../../components/divider';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -29,18 +35,19 @@ export default function Sidebar(){
     }, [])
     return (
         <div className="sidebar">
-            <div className="brand">
-                <span className="icon"><FaFish /></span>
-                <span className="title">SISCOL<sup>0.1</sup></span>
+            <div className="brand primary-dark">
+                <span className="icon"><FaFish color="#b8c7ce" /></span>
+                <span className="title white-text">SISCOL<sup>0.1</sup></span>
             </div>
-            <Divider />
+
             <ul>
-                <li ><Link to="/">Início</Link></li>
-                <Divider />
-                <li ><Link to="/pescador">Pescador</Link></li>
-                <li ><a href="fake">Anuidade</a></li>
-                <Divider />
-                <li ><a href="fake">Relatórios</a></li>
+                <li className="header">Principal</li>
+                <li ><Link to="/" ><FaHome size={14}  color="#b8c7ce"/> Início</Link></li>
+    
+                <li ><Link to="/pescador" ><FaSwimmer size={14}  color="#b8c7ce"/> Pescador</Link></li>
+                <li ><a href="fake" ><FaMoneyCheckAlt size={14}  color="#b8c7ce"/> Anuidade</a></li>
+    
+                <li ><a href="fake" ><FaChartBar size={14} color="#b8c7ce"/> Relatórios</a></li>
             </ul>
         </div>
     );

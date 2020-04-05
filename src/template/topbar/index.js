@@ -15,7 +15,7 @@ export default function Topbar(){
     }
     return (
         <nav>
-            <div className="nav-wrapper blue">
+            <div className="nav-wrapper primary">
                 <ul id="nav-mobile" className="left">
                     <li><a onClick={toggleSidebar}><FaBars /></a></li>
                 </ul>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {FaUser, FaDollarSign} from 'react-icons/fa';
+import {FaUser, FaDollarSign, FaBirthdayCake} from 'react-icons/fa';
+
 import "./styles.scss";
 import api from '../../services/api';
 
@@ -24,7 +25,7 @@ export default function Main(){
             <div className="row">
 
                 <div className="col l4 m6 s12">
-                    <div className="card-panel fragment border-teal">
+                    <div className="card-panel fragment border-blue">
                         <div className="icon">
                             <FaUser />
                         </div>
@@ -43,6 +44,29 @@ export default function Main(){
                         <div className="card-content">
                             <h2>Total Arrecado(Mês)</h2>
                             <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalMensal)}</span>
+                        </div>
+                    </div> 
+                </div>
+
+                <div className="col l4 m6 s12">
+                    <div className="card-panel fragment border-primary">
+                        <div className="icon">
+                            <FaBirthdayCake/>
+                        </div>
+                        <div className="card-content">
+                            <h2>Próximos aniversários:</h2>
+                            <span>
+                                <table>
+                                    <tr>
+                                        <td>Fernando Pereira dos Santos Chagas</td>
+                                        <td>20/04/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vicente de Paulo</td>
+                                        <td>20/04/2020</td>
+                                    </tr>
+                                </table>
+                            </span>
                         </div>
                     </div> 
                 </div>
