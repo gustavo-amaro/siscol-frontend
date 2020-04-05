@@ -58,12 +58,12 @@ export default function Main(){
                             <span>
                                 <table>
                                     <tr>
-                                        <td>Fernando Pereira dos Santos Chagas</td>
+                                        <td>José Pereira</td>
                                         <td>20/04/2020</td>
                                     </tr>
                                     <tr>
-                                        <td>Vicente de Paulo</td>
-                                        <td>20/04/2020</td>
+                                        <td>Vicente da Silva</td>
+                                        <td>25/04/2020</td>
                                     </tr>
                                 </table>
                             </span>
