@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './styles.scss';
 import {
     FaFish, 
@@ -7,7 +7,6 @@ import {
     FaMoneyCheckAlt,
     FaChartBar
     } from 'react-icons/fa';
-import Divider from '../../components/divider';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 

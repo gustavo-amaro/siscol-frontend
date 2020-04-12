@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-// import { Container } from './styles';
+import api from '../../../services/api';
+
+import { Redirect } from 'react-router-dom';
 
 export default function NovoPescador() {
+    const [toAddress, setToAddress] = useState(false);
+    const [id, setId] = useState(null);
+    async function addFisher(e){
+        e.preventDefault();
+        const data = {
+            "nome": e.target.nome.value.toUpperCase(),
+            "cpf": e.target.cpf.value,
+            "rg": e.target.rg.value.toUpperCase(),
+            "nascimento": e.target.nascimento.value,
+            "rgp": e.target.rgp.value.toUpperCase(),
+            "data_de_emissao_rgp": e.target.data_de_emissao_rgp.value,
+            "data_do_primeiro_rgp": e.target.data_do_primeiro_rgp.value,
+            "titulo": e.target.titulo.value,
+            "data_de_filiacao": e.target.data_de_filiacao.value,
+            "nit": e.target.nit.value,
+            "cei": e.target.cei.value
+        }
+        const jsonData = JSON.stringify(data);
+        const config = {     
+            headers: { 'content-type': 'application/json' }
+        }
+        let response;
+    
+        response = await api.post('/pescadores',jsonData, config);
+        
+        if(response.data.erro){
+           alert('erro '+response.data.erro);
+        }else if(response.status === 200){
+            alert('Pescador cadastrado no sistema!');
+            setId(response.data.id);
+            setToAddress(true);
+        }
+    }
+    if(toAddress){
+        return <Redirect to={`/novo-pescador/endereco/${id}`}/>
+    }
   return (
     <div className="container-fluid">
         <h2>Novo Pescador</h2>
         <div className="row card">
-            <form className="col s12">
+            <form className="col s12" onSubmit={addFisher}>
                 <div className="row">
                     <div className="input-field col s12 m6">
                         <input id="nome" name="nome" type="text" />
@@ -61,10 +99,11 @@ export default function NovoPescador() {
                         <label htmlFor="cei">CEI</label> 
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col m4"></div>
                     <div className="col m4 s12">
-                        <button type="submit" className="btn blue" style={{width: '100%'}}>Adicionar Pescador</button>
+                        <button type="submit" className="btn primary waves-effect" style={{width: '100%'}}>Próximo</button>
                     </div>
                     <div className="col m4"></div>
                 </div>

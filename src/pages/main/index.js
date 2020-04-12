@@ -57,14 +57,16 @@ export default function Main(){
                             <h2>Próximos aniversários:</h2>
                             <span>
                                 <table>
-                                    <tr>
+                                    <tbody>
+                                    <tr key={1}>
                                         <td>José Pereira</td>
                                         <td>20/04/2020</td>
                                     </tr>
-                                    <tr>
+                                    <tr key={2}>
                                         <td>Vicente da Silva</td>
                                         <td>25/04/2020</td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </span>
                         </div>

@@ -1,0 +1,70 @@
+import React from 'react';
+import api from '../../../services/api';
+
+export default function Adress(props) {
+    async function saveAddress(e){
+        e.preventDefault();
+        const fisherId = props.match.params.id;
+        console.log(props);
+        const data = {
+            'logradouro': e.target.logradouro.value,
+            'numero': e.target.numero.value,
+            'bairro': e.target.bairro.value,
+            'cidade': e.target.cidade.value,
+            'estado': e.target.estado.value,
+            'cep': e.target.cep.value
+        }
+        const jsonData = JSON.stringify(data);
+        const config = {     
+            headers: { 'content-type': 'application/json' }
+        }
+        const response = await api.post(`/pescadores/${fisherId}/enderecos`, jsonData, config);
+        if(response.data.erro){
+            alert('erro '+response.data.erro);
+         }else if(response.status === 200){
+             alert('Endereço adicionado ao pescador!');
+         }
+    }
+  return (
+    <div className="container-fluid">
+        <h2>Endereço do pescador</h2>
+        <div className="row card">
+            <form className="col s12" onSubmit={saveAddress}>
+                <div className="row">
+                    <div className="input-field col m4">
+                        <input id="logradouro" name="logradouro" type="text" />
+                        <label htmlFor="logradouro">Logradouro</label>
+                    </div>
+                    <div className="input-field col m4">
+                        <input id="numero" type="text" name="numero" />
+                        <label htmlFor="numero">Numero</label>
+                    </div>
+                    <div className="input-field col m4 s12">
+                        <input id="bairro" type="text" name="bairro" />
+                        <label htmlFor="bairro">Bairro</label> 
+                    </div>
+                    <div className="input-field col m4">
+                        <input id="cidade" name="cidade" type="text" />
+                        <label htmlFor="cidade">Cidade</label>
+                    </div>
+                    <div className="input-field col m4">
+                        <input id="estado" type="text" name="estado" />
+                        <label htmlFor="estado">Estado</label>
+                    </div>
+                    <div className="input-field col m4 s12">
+                        <input id="cep" type="text" name="cep" />
+                        <label htmlFor="cep">CEP</label> 
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col m4"></div>
+                    <div className="col m4 s12">
+                        <button type="submit" className="btn primary waves-effect" style={{width: '100%'}}>Salvar Endereço</button>
+                    </div>
+                    <div className="col m4"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+  );
+}

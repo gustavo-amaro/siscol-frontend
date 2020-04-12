@@ -38,7 +38,7 @@ export default function Pescador(props) {
     <div className="container-fluid">
         <h2>Pescador</h2>
 
-        <Link className="btn purple" to="/novo-pescador">Novo pescador</Link>
+        <Link className="btn primary" to="/novo-pescador">Novo pescador</Link>
         <div className="card animate table-rounded">
             <div className="card-head">
             </div>
@@ -61,7 +61,7 @@ export default function Pescador(props) {
                                 <td>{dateFormat(pescador.nascimento)}</td>
                                 <td>{pescador.rg}</td>
                                 <td>
-                                    <Link className="btn blue"><FaEye /></Link>
+                                    <Link className="btn blue" to='/pescador/'><FaEye /></Link>
                                     <a className="btn green"><FaEdit /></a>
                                     <a className="btn red modal-trigger" href="#modalExcluir" onClick={() => setIdPescador(pescador.id)}><FaTrash /></a>
                                 </td>
