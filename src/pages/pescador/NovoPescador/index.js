@@ -1,26 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import api from "../../../services/api";
 
 import { Redirect } from "react-router-dom";
+import {cpfMask} from "../../../Utils/Masks";
+import { formatDate } from "../../../Utils";
 
-export default function NovoPescador() {
+export default function NovoPescador(props) {
   const [toAddress, setToAddress] = useState(false);
   const [id, setId] = useState(null);
   const [cpf, setCpf] = useState("");
-  function cpfMask(value) {
-    return value
-      .replace(/\D/g, "") // substitui qualquer caracter que nao seja numero por nada
-      .replace(/(\d{3})(\d)/, "$1.$2") // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
-      .replace(/(-\d{2})\d+?$/, "$1"); // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+  const [fisher, setFisher] = useState({});
+  const [nascimento, setNascimento] = useState("");
+  const [primeiroRgp, setPrimeiroRgp] = useState("");
+  const [emissaoRgp, setEmissaoRgp] = useState("");
+  const [filiacao, setFiliacao] = useState("");
+  useEffect(()=>{
+    const fisherId = props.match.params.id;
+    if(fisherId){
+      setId(fisherId);
+      getFisher(fisherId);
+    }
+  },[props.match.params.id])
+  async function getFisher(fisherId){
+    const response = await api.get('/pescadores/'+fisherId);
+    setFisher(response.data);
+    setCpf(cpfMask(response.data.cpf))
+    setNascimento(formatDate(response.data.nascimento));
+    setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
+    setFiliacao(formatDate(response.data.data_de_filiacao));
+    setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
+
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input=>{
+      input.focus();
+      input.blur();
+    })
+  }
+  function handleSubmitForm(e){
+    e.preventDefault();
+    if(!id) addFisher(e);
+    else updateFisher(e);
   }
   async function addFisher(e) {
-    e.preventDefault();
     const data = {
       nome: e.target.nome.value.toUpperCase(),
-      cpf: e.target.cpf.value,
+      cpf: e.target.cpf.value.replace('.','').replace('.','').replace('-',''),
       rg: e.target.rg.value.toUpperCase(),
       nascimento: e.target.nascimento.value,
       rgp: e.target.rgp.value.toUpperCase(),
@@ -47,6 +72,34 @@ export default function NovoPescador() {
       setToAddress(true);
     }
   }
+  async function updateFisher(e){
+    const data = {
+      nome: e.target.nome.value.toUpperCase(),
+      cpf: e.target.cpf.value.replace('.','').replace('.','').replace('-',''),
+      rg: e.target.rg.value.toUpperCase(),
+      nascimento: e.target.nascimento.value,
+      rgp: e.target.rgp.value.toUpperCase(),
+      data_de_emissao_rgp: e.target.data_de_emissao_rgp.value,
+      data_do_primeiro_rgp: e.target.data_do_primeiro_rgp.value,
+      titulo: e.target.titulo.value,
+      data_de_filiacao: e.target.data_de_filiacao.value,
+      nit: e.target.nit.value,
+      cei: e.target.cei.value,
+    };
+    const jsonData = JSON.stringify(data);
+    const config = {
+      headers: { "content-type": "application/json" },
+    };
+    let response = await api.put(`/pescadores/${id}`, jsonData, config);
+    if (response.data.updated) {
+      alert("Informações do pescador foram atualizadas!");
+      setToAddress(true);
+      
+    } else {
+      alert("erro " + response.data.erro);
+    }
+  }
+
   if (toAddress) {
     return <Redirect to={`/novo-pescador/endereco/${id}`} />;
   }
@@ -54,14 +107,14 @@ export default function NovoPescador() {
     <div className="container-fluid">
       <h2>Novo Pescador</h2>
       <div className="row card">
-        <form className="col s12" onSubmit={addFisher}>
+        <form className="col s12" onSubmit={handleSubmitForm}>
           <div className="row">
             <div className="input-field col s12 m6">
-              <input id="nome" name="nome" type="text" />
+              <input id="nome" name="nome" type="text" defaultValue={fisher.nome}/>
               <label htmlFor="nome">Nome</label>
             </div>
             <div className="input-field col s12 m6">
-              <input id="nascimento" name="nascimento" type="date" />
+              <input id="nascimento" name="nascimento" type="date" defaultValue={nascimento} />
               <label htmlFor="nascimento">Data de nascimento</label>
             </div>
           </div>
@@ -77,11 +130,11 @@ export default function NovoPescador() {
               <label htmlFor="cpf">CPF</label>
             </div>
             <div className="input-field col s12 m4">
-              <input id="rg" type="text" />
+              <input id="rg" type="text" defaultValue={fisher.rg} />
               <label htmlFor="rg">RG</label>
             </div>
             <div className="input-field col s12 m4">
-              <input id="rgp" type="text" name="rgp" />
+              <input id="rgp" type="text" name="rgp" defaultValue={fisher.rgp}/>
               <label htmlFor="rgp">RGP</label>
             </div>
           </div>
@@ -92,6 +145,7 @@ export default function NovoPescador() {
                 id="data_de_emissao_rgp"
                 name="data_de_emissao_rgp"
                 type="date"
+                defaultValue={emissaoRgp}
               />
               <label htmlFor="data_de_emissao_rgp">Data de emissão RGP</label>
             </div>
@@ -100,6 +154,7 @@ export default function NovoPescador() {
                 id="data_do_primeiro_rgp"
                 type="date"
                 name="data_do_primeiro_rgp"
+                defaultValue={primeiroRgp}
               />
               <label htmlFor="data_do_primeiro_rgp">Data do primeiro RGP</label>
             </div>
@@ -108,21 +163,22 @@ export default function NovoPescador() {
                 id="data_de_filiacao"
                 type="date"
                 name="data_de_filiacao"
+                defaultValue={filiacao}
               />
               <label htmlFor="data_de_filiacao">Data de filiação</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col m4">
-              <input id="titulo" name="titulo" type="text" />
+              <input id="titulo" name="titulo" type="text" defaultValue={fisher.titulo} />
               <label htmlFor="titulo">Titulo</label>
             </div>
             <div className="input-field col m4">
-              <input id="nit" type="text" name="nit" />
+              <input id="nit" type="text" name="nit" defaultValue={fisher.nit}/>
               <label htmlFor="nit">NIT</label>
             </div>
             <div className="input-field col m4 s12">
-              <input id="cei" type="text" name="cei" />
+              <input id="cei" type="text" name="cei" defaultValue={fisher.cei}/>
               <label htmlFor="cei">CEI</label>
             </div>
           </div>

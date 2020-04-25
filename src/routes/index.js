@@ -14,6 +14,7 @@ const Routes = () => (
     <Route exact path="/" component={Main} />
     <Route exact path="/pescador" component={Pescador} />
     <Route path="/pescador/:page" component={Pescador} />
+    <Route exact path="/editar-pescador/:id" component={NovoPescador} />
     <Route exact path="/novo-pescador" component={NovoPescador} />
     <Route exact path="/novo-pescador/endereco/:id" component={Address} />
     <Route exact path="/ver-pescador/:id" component={FisherInfo} />

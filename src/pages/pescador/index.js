@@ -63,9 +63,9 @@ export default function Pescador(props) {
                   >
                     <FaEye />
                   </Link>
-                  <a className="btn green">
+                  <Link className="btn green" to={`/editar-pescador/${pescador.id}`}>
                     <FaEdit />
-                  </a>
+                  </Link>
                   <a
                     className="btn red modal-trigger"
                     href="#modalExcluir"
