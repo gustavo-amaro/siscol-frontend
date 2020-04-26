@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
@@ -8,12 +8,14 @@ import { dateFormat } from "../../Utils";
 
 export default function Pescador(props) {
   const [page, setPage] = useState(1);
-  const [pescadores, setPescadores] = useState([1, 2, 3]);
+  const [pescadores, setPescadores] = useState([]);
   const [idPescador, setIdPescador] = useState(0);
-  async function getPescadores() {
+
+  const getPescadores = useCallback(async () => {
     const response = await api.get(`/pescadores/page/${page}`);
     setPescadores(response.data);
-  }
+  }, [page]);
+
   useEffect(() => {
     let p = props.match.params.page;
     if (p) {
@@ -22,11 +24,11 @@ export default function Pescador(props) {
     getPescadores();
 
     var elems = document.querySelectorAll(".modal");
-    var instances = M.Modal.init(elems, { opacity: 0.5 });
-  }, []);
+    M.Modal.init(elems, { opacity: 0.5 });
+  }, [props.match.params.page, getPescadores]);
   async function deletePescador(e) {
     e.preventDefault();
-    const response = await api.delete(`/pescadores/${idPescador}`);
+    await api.delete(`/pescadores/${idPescador}`);
     getPescadores();
   }
   return (
@@ -63,7 +65,10 @@ export default function Pescador(props) {
                   >
                     <FaEye />
                   </Link>
-                  <Link className="btn green" to={`/editar-pescador/${pescador.id}`}>
+                  <Link
+                    className="btn green"
+                    to={`/editar-pescador/${pescador.id}`}
+                  >
                     <FaEdit />
                   </Link>
                   <a
@@ -79,8 +84,8 @@ export default function Pescador(props) {
           </tbody>
         </table>
         <div className="card-action">
-          <a href="#">This is a link</a>
-          <a href="#">This is a link</a>
+          <a href="nolink">This is a link</a>
+          <a href="nolink">This is a link</a>
         </div>
       </div>
       {/*Modal de exclusão*/}
@@ -94,7 +99,9 @@ export default function Pescador(props) {
           <p>Esta ação não pode ser desfeita.</p>
         </div>
         <div className="modal-footer">
-          <a className="btn modal-close">Cancelar</a>
+          <a href="closemodal" className="btn modal-close">
+            Cancelar
+          </a>
           <a
             href="#!"
             className="modal-close waves-effect waves-red btn red"

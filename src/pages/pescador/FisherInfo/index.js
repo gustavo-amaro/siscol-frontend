@@ -8,7 +8,7 @@ export default function FisherInfo(props) {
   const [addresses, setAddresses] = useState([]);
   useEffect(() => {
     getFisher();
-  }, []);
+  });
   async function getFisher() {
     const fisherId = props.match.params.id;
     const res = await api.get(`/pescadores/${fisherId}`);
