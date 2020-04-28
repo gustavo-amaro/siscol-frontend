@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import api from "../../services/api";
 import M from "materialize-css";
 import "./styles.scss";
@@ -10,11 +10,23 @@ export default function Pescador(props) {
   const [page, setPage] = useState(1);
   const [pescadores, setPescadores] = useState([]);
   const [idPescador, setIdPescador] = useState(0);
+  const [toLogin, setToLogin] = useState(false);
+
+  const token = localStorage.getItem("_token");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const getPescadores = useCallback(async () => {
-    const response = await api.get(`/pescadores/page/${page}`);
-    setPescadores(response.data);
-  }, [page]);
+    try {
+      const response = await api.get(`/pescadores/page/${page}`, config);
+      setPescadores(response.data);
+    } catch (e) {
+      setToLogin(true);
+    }
+  }, [page, config]);
 
   useEffect(() => {
     let p = props.match.params.page;
@@ -25,11 +37,18 @@ export default function Pescador(props) {
 
     var elems = document.querySelectorAll(".modal");
     M.Modal.init(elems, { opacity: 0.5 });
-  }, [props.match.params.page, getPescadores]);
+  }, []);
   async function deletePescador(e) {
     e.preventDefault();
-    await api.delete(`/pescadores/${idPescador}`);
-    getPescadores();
+    try {
+      await api.delete(`/pescadores/${idPescador}`, config);
+      getPescadores();
+    } catch (e) {
+      setToLogin(true);
+    }
+  }
+  if (toLogin) {
+    return <Redirect to="/login" />;
   }
   return (
     <div className="container-fluid">

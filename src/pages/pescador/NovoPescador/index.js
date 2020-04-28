@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 
 import { Redirect } from "react-router-dom";
-import {cpfMask} from "../../../Utils/Masks";
+import { cpfMask } from "../../../Utils/Masks";
 import { formatDate } from "../../../Utils";
 
 export default function NovoPescador(props) {
@@ -15,37 +15,49 @@ export default function NovoPescador(props) {
   const [primeiroRgp, setPrimeiroRgp] = useState("");
   const [emissaoRgp, setEmissaoRgp] = useState("");
   const [filiacao, setFiliacao] = useState("");
-  useEffect(()=>{
+
+  const token = localStorage.getItem("_token");
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  useEffect(() => {
     const fisherId = props.match.params.id;
-    if(fisherId){
+    if (fisherId) {
       setId(fisherId);
       getFisher(fisherId);
     }
-  },[props.match.params.id])
-  async function getFisher(fisherId){
-    const response = await api.get('/pescadores/'+fisherId);
+  }, [props.match.params.id]);
+  async function getFisher(fisherId) {
+    const response = await api.get("/pescadores/" + fisherId, config);
     setFisher(response.data);
-    setCpf(cpfMask(response.data.cpf))
+    setCpf(cpfMask(response.data.cpf));
     setNascimento(formatDate(response.data.nascimento));
     setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
     setFiliacao(formatDate(response.data.data_de_filiacao));
     setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
 
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(input=>{
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => {
       input.focus();
       input.blur();
-    })
+    });
   }
-  function handleSubmitForm(e){
+  function handleSubmitForm(e) {
     e.preventDefault();
-    if(!id) addFisher(e);
+    if (!id) addFisher(e);
     else updateFisher(e);
   }
   async function addFisher(e) {
     const data = {
       nome: e.target.nome.value.toUpperCase(),
-      cpf: e.target.cpf.value.replace('.','').replace('.','').replace('-',''),
+      cpf: e.target.cpf.value
+        .replace(".", "")
+        .replace(".", "")
+        .replace("-", ""),
       rg: e.target.rg.value.toUpperCase(),
       nascimento: e.target.nascimento.value,
       rgp: e.target.rgp.value.toUpperCase(),
@@ -57,12 +69,8 @@ export default function NovoPescador(props) {
       cei: e.target.cei.value,
     };
     const jsonData = JSON.stringify(data);
-    const config = {
-      headers: { "content-type": "application/json" },
-    };
-    let response;
 
-    response = await api.post("/pescadores", jsonData, config);
+    const response = await api.post("/pescadores", jsonData, config);
 
     if (response.data.erro) {
       alert("erro " + response.data.erro);
@@ -72,10 +80,13 @@ export default function NovoPescador(props) {
       setToAddress(true);
     }
   }
-  async function updateFisher(e){
+  async function updateFisher(e) {
     const data = {
       nome: e.target.nome.value.toUpperCase(),
-      cpf: e.target.cpf.value.replace('.','').replace('.','').replace('-',''),
+      cpf: e.target.cpf.value
+        .replace(".", "")
+        .replace(".", "")
+        .replace("-", ""),
       rg: e.target.rg.value.toUpperCase(),
       nascimento: e.target.nascimento.value,
       rgp: e.target.rgp.value.toUpperCase(),
@@ -87,14 +98,11 @@ export default function NovoPescador(props) {
       cei: e.target.cei.value,
     };
     const jsonData = JSON.stringify(data);
-    const config = {
-      headers: { "content-type": "application/json" },
-    };
+
     let response = await api.put(`/pescadores/${id}`, jsonData, config);
     if (response.data.updated) {
       alert("Informações do pescador foram atualizadas!");
       setToAddress(true);
-      
     } else {
       alert("erro " + response.data.erro);
     }
@@ -110,11 +118,21 @@ export default function NovoPescador(props) {
         <form className="col s12" onSubmit={handleSubmitForm}>
           <div className="row">
             <div className="input-field col s12 m6">
-              <input id="nome" name="nome" type="text" defaultValue={fisher.nome}/>
+              <input
+                id="nome"
+                name="nome"
+                type="text"
+                defaultValue={fisher.nome}
+              />
               <label htmlFor="nome">Nome</label>
             </div>
             <div className="input-field col s12 m6">
-              <input id="nascimento" name="nascimento" type="date" defaultValue={nascimento} />
+              <input
+                id="nascimento"
+                name="nascimento"
+                type="date"
+                defaultValue={nascimento}
+              />
               <label htmlFor="nascimento">Data de nascimento</label>
             </div>
           </div>
@@ -134,7 +152,12 @@ export default function NovoPescador(props) {
               <label htmlFor="rg">RG</label>
             </div>
             <div className="input-field col s12 m4">
-              <input id="rgp" type="text" name="rgp" defaultValue={fisher.rgp}/>
+              <input
+                id="rgp"
+                type="text"
+                name="rgp"
+                defaultValue={fisher.rgp}
+              />
               <label htmlFor="rgp">RGP</label>
             </div>
           </div>
@@ -170,15 +193,30 @@ export default function NovoPescador(props) {
           </div>
           <div className="row">
             <div className="input-field col m4">
-              <input id="titulo" name="titulo" type="text" defaultValue={fisher.titulo} />
+              <input
+                id="titulo"
+                name="titulo"
+                type="text"
+                defaultValue={fisher.titulo}
+              />
               <label htmlFor="titulo">Titulo</label>
             </div>
             <div className="input-field col m4">
-              <input id="nit" type="text" name="nit" defaultValue={fisher.nit}/>
+              <input
+                id="nit"
+                type="text"
+                name="nit"
+                defaultValue={fisher.nit}
+              />
               <label htmlFor="nit">NIT</label>
             </div>
             <div className="input-field col m4 s12">
-              <input id="cei" type="text" name="cei" defaultValue={fisher.cei}/>
+              <input
+                id="cei"
+                type="text"
+                name="cei"
+                defaultValue={fisher.cei}
+              />
               <label htmlFor="cei">CEI</label>
             </div>
           </div>

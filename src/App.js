@@ -1,33 +1,36 @@
-import React from 'react';
-import { createStore } from 'redux';
-import { Provider  } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import reducers from './reducers';
-import Sidebar from './template/sidebar';
-import TopBar from './template/topbar';
-import Footer from './template/footer';
-import Routes from './routes';
-import './styles.scss';
+import React from "react";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducers from "./reducers";
+import Sidebar from "./template/sidebar";
+import TopBar from "./template/topbar";
+import Footer from "./template/footer";
+import Router from "./routes";
+import { useLocation } from "react-router-dom";
+import "./styles.scss";
 
 const store = createStore(reducers);
 
 function App() {
-  
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      {location.pathname !== "/login" ? (
         <div className="App">
           <Sidebar />
           <div className="content">
-              <TopBar />
-              <div className="main-content">
-                  <Routes />
-              </div>
-              <Footer />
+            <TopBar />
+            <div className="main-content">
+              <Router />
+            </div>
+            <Footer />
           </div>
         </div>
-      </Provider>
-    </BrowserRouter>
+      ) : (
+        <Router />
+      )}
+    </Provider>
   );
 }
 

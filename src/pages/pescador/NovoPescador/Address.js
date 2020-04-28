@@ -5,25 +5,37 @@ export default function Adress(props) {
   const [fisherAddresses, setFisherAddresses] = useState([]);
   const [showNewAddress, setShowNewAddress] = useState(false);
 
+  const token = localStorage.getItem("_token");
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   const getFisherAddresses = useCallback(async () => {
     const id = props.match.params.id;
-    const response = await api.get(`/pescadores/${id}/enderecos`);
+    const response = await api.get(`/pescadores/${id}/enderecos`, config);
 
     if (response.status === 200) {
       setFisherAddresses(response.data);
     }
     setShowNewAddress(false);
-    let inputs = document.querySelectorAll("input");
-    inputs.forEach((input) => {
-      input.focus();
-      input.blur();
-    });
   }, [props.match.params.id]);
 
   useEffect(() => {
     getFisherAddresses();
   }, [getFisherAddresses]);
 
+  useEffect(() => {
+    if (fisherAddresses.length > 0) {
+      const inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.focus();
+        input.blur();
+      });
+    }
+  }, [fisherAddresses]);
   function cleanInputs() {
     document.getElementById("logradouro").value = "";
     document.getElementById("numero").value = "";
@@ -44,9 +56,7 @@ export default function Adress(props) {
       cep: e.target.cep.value,
     };
     const jsonData = JSON.stringify(data);
-    const config = {
-      headers: { "content-type": "application/json" },
-    };
+
     const response = await api.put(`/enderecos/${id}`, jsonData, config);
     if (response.data.erro) {
       alert("erro " + response.data.erro);
@@ -67,23 +77,23 @@ export default function Adress(props) {
       cep: e.target.cep.value,
     };
     const jsonData = JSON.stringify(data);
-    const config = {
-      headers: { "content-type": "application/json" },
-    };
+
     const response = await api.post(
       `/pescadores/${fisherId}/enderecos`,
       jsonData,
       config
     );
+    console.log(response);
     if (response.data.erro) {
       alert("erro " + response.data.erro);
     } else if (response.status === 200) {
       alert("Endereço adicionado ao pescador!");
+      console.log(response.data);
       getFisherAddresses();
     }
   }
   async function deleteAddress(id) {
-    const response = await api.delete(`/enderecos/${id}`);
+    const response = await api.delete(`/enderecos/${id}`, config);
     if (response.data.erro) {
       alert("erro " + response.data.erro);
     } else if (response.status === 200) {

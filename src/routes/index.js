@@ -8,10 +8,12 @@ import Erro404 from "../pages/erro/erro404";
 import NovoPescador from "../pages/pescador/NovoPescador";
 import Address from "../pages/pescador/NovoPescador/Address";
 import FisherInfo from "../pages/pescador/FisherInfo";
+import Login from "../pages/login";
 
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Main} />
+    <Route exact path="/login" component={Login} />
     <Route exact path="/pescador" component={Pescador} />
     <Route path="/pescador/:page" component={Pescador} />
     <Route exact path="/editar-pescador/:id" component={NovoPescador} />
