@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { Link, Redirect } from "react-router-dom";
 import api from "../../services/api";
@@ -13,31 +13,44 @@ export default function Pescador(props) {
   const [toLogin, setToLogin] = useState(false);
 
   const token = localStorage.getItem("_token");
-  const config = {
+  const [config] = useState({
     headers: {
+      "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  };
+  });
 
-  const getPescadores = useCallback(async () => {
+  async function getPescadores (){
+    const entidade_id = localStorage.getItem('entidade_id')
     try {
-      const response = await api.get(`/pescadores/page/${page}`, config);
+      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`, config);
       setPescadores(response.data);
     } catch (e) {
       setToLogin(true);
     }
-  }, [page, config]);
+  }
 
   useEffect(() => {
     let p = props.match.params.page;
     if (p) {
       setPage(p);
     }
+    async function getPescadores (){
+      const entidade_id = localStorage.getItem('entidade_id')
+      try {
+        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`, config);
+        setPescadores(response.data);
+      } catch (e) {
+        setToLogin(true);
+      }
+    }
     getPescadores();
 
     var elems = document.querySelectorAll(".modal");
     M.Modal.init(elems, { opacity: 0.5 });
-  }, []);
+
+  }, [props.match.params.page, config]);
+
   async function deletePescador(e) {
     e.preventDefault();
     try {
@@ -47,9 +60,11 @@ export default function Pescador(props) {
       setToLogin(true);
     }
   }
+
   if (toLogin) {
     return <Redirect to="/login" />;
   }
+
   return (
     <div className="container-fluid">
       <h2>Pescador</h2>

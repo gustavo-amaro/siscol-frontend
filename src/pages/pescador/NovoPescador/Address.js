@@ -1,31 +1,48 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
+import { Redirect } from "react-router-dom";
 
 export default function Adress(props) {
   const [fisherAddresses, setFisherAddresses] = useState([]);
   const [showNewAddress, setShowNewAddress] = useState(false);
+  const [toLogin, setToLogin] = useState(false);
 
   const token = localStorage.getItem("_token");
-  const config = {
+  const [config] = useState({
     headers: {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  };
+  });
 
-  const getFisherAddresses = useCallback(async () => {
+  async function getFisherAddresses(){
     const id = props.match.params.id;
-    const response = await api.get(`/pescadores/${id}/enderecos`, config);
 
-    if (response.status === 200) {
-      setFisherAddresses(response.data);
+    try{
+      const response = await api.get(`/pescadores/${id}/enderecos`, config);
+
+      if (response.status === 200) {
+        setFisherAddresses(response.data);
+      }
+    }catch(e){
+      setToLogin(true);
     }
+
     setShowNewAddress(false);
-  }, [props.match.params.id]);
+  }
 
   useEffect(() => {
+    async function getFisherAddresses(){
+      const id = props.match.params.id;
+      const response = await api.get(`/pescadores/${id}/enderecos`, config);
+  
+      if (response.status === 200) {
+        setFisherAddresses(response.data);
+      }
+      setShowNewAddress(false);
+    }
     getFisherAddresses();
-  }, [getFisherAddresses]);
+  }, [config, props.match.params.id]);
 
   useEffect(() => {
     if (fisherAddresses.length > 0) {
@@ -36,6 +53,7 @@ export default function Adress(props) {
       });
     }
   }, [fisherAddresses]);
+
   function cleanInputs() {
     document.getElementById("logradouro").value = "";
     document.getElementById("numero").value = "";
@@ -77,19 +95,21 @@ export default function Adress(props) {
       cep: e.target.cep.value,
     };
     const jsonData = JSON.stringify(data);
-
-    const response = await api.post(
-      `/pescadores/${fisherId}/enderecos`,
-      jsonData,
-      config
-    );
-    console.log(response);
-    if (response.data.erro) {
-      alert("erro " + response.data.erro);
-    } else if (response.status === 200) {
-      alert("Endereço adicionado ao pescador!");
-      console.log(response.data);
-      getFisherAddresses();
+    try{
+      const response = await api.post(
+        `/pescadores/${fisherId}/enderecos`,
+        jsonData,
+        config
+      );
+      if (response.data.erro) {
+        alert("erro " + response.data.erro);
+      } else if (response.status === 200) {
+        alert("Endereço adicionado ao pescador!");
+        console.log(response.data);
+        getFisherAddresses();
+      }
+    }catch(e){
+      setToLogin(true);
     }
   }
   async function deleteAddress(id) {
@@ -101,10 +121,16 @@ export default function Adress(props) {
       getFisherAddresses();
     }
   }
+
   function handleClickAddAddress() {
     setShowNewAddress(true);
     cleanInputs();
   }
+
+  if(toLogin){
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div className="container-fluid">
       <h2>Endereço(s) do pescador</h2>

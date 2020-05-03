@@ -22,6 +22,8 @@ export default function Login() {
     const response = await api.post("/users/authenticate", jsonData, config);
     if (response.status === 200) {
       localStorage.setItem("_token", response.data.token);
+      console.log(response.data)
+      localStorage.setItem("entidade_id", response.data.user.entidade_id);
       setToMain(true);
     }
   }

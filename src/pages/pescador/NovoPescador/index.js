@@ -15,37 +15,48 @@ export default function NovoPescador(props) {
   const [primeiroRgp, setPrimeiroRgp] = useState("");
   const [emissaoRgp, setEmissaoRgp] = useState("");
   const [filiacao, setFiliacao] = useState("");
+  const [toLogin, setToLogin] = useState(false);
 
   const token = localStorage.getItem("_token");
-  const config = {
+  const entidade_id = localStorage.getItem("entidade_id");
+
+  const [config] = useState({
     headers: {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  };
+  });
 
   useEffect(() => {
     const fisherId = props.match.params.id;
+    
+    async function getFisher(fisherId) {
+      try{
+        const response = await api.get("/pescadores/" + fisherId, config);
+        setFisher(response.data);
+        setCpf(cpfMask(response.data.cpf));
+        setNascimento(formatDate(response.data.nascimento));
+        setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
+        setFiliacao(formatDate(response.data.data_de_filiacao));
+        setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
+      }catch(e){
+        setToLogin(true);
+      }
+      
+      const inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.focus();
+        input.blur();
+      });
+    }
+
     if (fisherId) {
       setId(fisherId);
       getFisher(fisherId);
     }
-  }, [props.match.params.id]);
-  async function getFisher(fisherId) {
-    const response = await api.get("/pescadores/" + fisherId, config);
-    setFisher(response.data);
-    setCpf(cpfMask(response.data.cpf));
-    setNascimento(formatDate(response.data.nascimento));
-    setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
-    setFiliacao(formatDate(response.data.data_de_filiacao));
-    setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
+  }, [props.match.params.id, config]);
 
-    const inputs = document.querySelectorAll("input");
-    inputs.forEach((input) => {
-      input.focus();
-      input.blur();
-    });
-  }
+  
   function handleSubmitForm(e) {
     e.preventDefault();
     if (!id) addFisher(e);
@@ -69,15 +80,18 @@ export default function NovoPescador(props) {
       cei: e.target.cei.value,
     };
     const jsonData = JSON.stringify(data);
+    try{
+      const response = await api.post(`/pescadores/${entidade_id}`, jsonData, config);
 
-    const response = await api.post("/pescadores", jsonData, config);
-
-    if (response.data.erro) {
-      alert("erro " + response.data.erro);
-    } else if (response.status === 200) {
-      alert("Pescador cadastrado no sistema!");
-      setId(response.data.id);
-      setToAddress(true);
+      if (response.data.erro) {
+        alert("erro " + response.data.erro);
+      } else if (response.status === 200) {
+        alert("Pescador cadastrado no sistema!");
+        setId(response.data.id);
+        setToAddress(true);
+      }
+    }catch(e){
+      setToLogin(true);
     }
   }
   async function updateFisher(e) {
@@ -99,17 +113,24 @@ export default function NovoPescador(props) {
     };
     const jsonData = JSON.stringify(data);
 
-    let response = await api.put(`/pescadores/${id}`, jsonData, config);
-    if (response.data.updated) {
-      alert("Informações do pescador foram atualizadas!");
-      setToAddress(true);
-    } else {
-      alert("erro " + response.data.erro);
+    try{
+      let response = await api.put(`/pescadores/${id}`, jsonData, config);
+      if (response.data.updated) {
+        alert("Informações do pescador foram atualizadas!");
+        setToAddress(true);
+      } else {
+        alert("erro " + response.data.erro);
+      }
+    }catch(e){
+      setToLogin(true);
     }
   }
 
   if (toAddress) {
     return <Redirect to={`/novo-pescador/endereco/${id}`} />;
+  }
+  if(toLogin){
+    return <Redirect to="/login" />;
   }
   return (
     <div className="container-fluid">

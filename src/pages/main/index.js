@@ -11,34 +11,38 @@ export default function Main() {
   const [toLogin, setToLogin] = useState(false);
 
   const token = localStorage.getItem("_token");
-  const config = {
+  
+  const [config] = useState({
     headers: {
+      "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  };
+  });
 
-  async function getTotalFiliados() {
-    try {
-      const response = await api.get("/pescadores/registros/total/", config);
-      setTotalFiliados(response.data.count);
-    } catch (e) {
-      setToLogin(true);
-    }
-  }
-  async function getTotalMensal() {
-    console.log(config);
-    try {
-      const response = await api.post("/guia/mensal/", config);
-      setTotalMensal(response.data);
-    } catch (e) {
-      //setToLogin(true);
-    }
-  }
   useEffect(() => {
     document.title = "Principal";
+    async function getTotalFiliados() {
+      const entidade_id = localStorage.getItem('entidade_id');
+      try {
+        const response = await api.get(`/pescadores/${entidade_id}/registros/total/`, config);
+        setTotalFiliados(response.data.count);
+      } catch (e) {
+        setToLogin(true);
+      }
+    }
+    async function getTotalMensal() {
+      const entidade_id = localStorage.getItem('entidade_id');
+      try {
+        const response = await api.get(`/guias/${entidade_id}/totalMensal`, config);
+        setTotalMensal(response.data.totalMonth);
+      } catch (e) {
+        setToLogin(true);
+      }
+    }
+
     getTotalFiliados();
     getTotalMensal();
-  }, []);
+  }, [config]);
   if (toLogin) {
     return <Redirect to="/login" />;
   }
