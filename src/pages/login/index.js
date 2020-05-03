@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Container, LoginBox, Form } from "./styles";
+import { Container, LoginBox, Form, SideBox } from "./styles";
 
 import api from "../../services/api";
 import { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 export default function Login() {
   const [toMain, setToMain] = useState(false);
@@ -22,8 +22,8 @@ export default function Login() {
     const response = await api.post("/users/authenticate", jsonData, config);
     if (response.status === 200) {
       localStorage.setItem("_token", response.data.token);
-      console.log(response.data)
       localStorage.setItem("entidade_id", response.data.user.entidade_id);
+      localStorage.setItem("user_name", response.data.user.nome);
       setToMain(true);
     }
   }
@@ -34,9 +34,13 @@ export default function Login() {
   return (
     <Container>
       <LoginBox>
+        <SideBox className="teal">
+          <span>Realize o login para acessar o sistema:<br/><br/></span>
+          <span>Ou <Link to="/register">cadastre-se</Link> gratuitamente.</span>
+        </SideBox>
         <Form onSubmit={handleSubmitLogin}>
           <div className="input-field" style={{ width: "75%" }}>
-            <input id="first_name" name="email" type="text" />
+            <input id="first_name" name="email" type="text" autoComplete="off"/>
             <label htmlFor="first_name">Email</label>
           </div>
           <div className="input-field" style={{ width: "75%" }}>
@@ -46,13 +50,9 @@ export default function Login() {
           <button
             type="submit"
             className="btn"
-            style={{ background: "#682ab5", width: 140 }}
+            style={{ background: "#682ab5", width: '70%'}}
           >
             Entrar
-          </button>
-          Ou
-          <button type="button" className="btn" style={{ width: 140 }}>
-            Cadastre-se
           </button>
         </Form>
       </LoginBox>

@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const LoginBox = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 320px;
+  height: 450px;
   border-radius: 8px;
   box-shadow: 0 0 1px black;
   background: rgba(255, 255, 255, 1);

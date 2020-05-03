@@ -9,10 +9,16 @@ import NovoPescador from "../pages/pescador/NovoPescador";
 import Address from "../pages/pescador/NovoPescador/Address";
 import FisherInfo from "../pages/pescador/FisherInfo";
 import Login from "../pages/login";
+import Register from '../pages/Register';
+import RegisterResponsavel from '../pages/Register/Responsavel';
+import RegisterEntidade from '../pages/Register/Entidade';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Main} />
+    <Route exact path="/register" component={Register} />
+    <Route exact path="/register/responsavel" component={RegisterResponsavel} />
+    <Route exact path="/register/entidade" component={RegisterEntidade} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/pescador" component={Pescador} />
     <Route path="/pescador/:page" component={Pescador} />

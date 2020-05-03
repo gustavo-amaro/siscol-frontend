@@ -13,10 +13,19 @@ const store = createStore(reducers);
 
 function App() {
   const location = useLocation();
-
+  const specialPaths = [
+    '/login', 
+    '/register', 
+    '/register/responsavel',
+    '/login/',
+    '/register/',
+    '/register/responsavel/',
+    '/register/entidade',
+    '/register/entidade/'
+  ]
   return (
     <Provider store={store}>
-      {location.pathname !== "/login" ? (
+      {!specialPaths.includes(location.pathname) ? (
         <div className="App">
           <Sidebar />
           <div className="content">
