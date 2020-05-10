@@ -4,7 +4,7 @@ import { Container, LoginBox, Form, SideBox } from "./styles";
 
 import api from "../../services/api";
 import { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default function Login() {
   const [toMain, setToMain] = useState(false);
@@ -36,7 +36,6 @@ export default function Login() {
       <LoginBox>
         <SideBox className="teal">
           <span>Realize o login para acessar o sistema:<br/><br/></span>
-          <span>Ou <Link to="/register">cadastre-se</Link> gratuitamente.</span>
         </SideBox>
         <Form onSubmit={handleSubmitLogin}>
           <div className="input-field" style={{ width: "75%" }}>

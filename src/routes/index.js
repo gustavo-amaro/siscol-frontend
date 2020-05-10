@@ -12,21 +12,22 @@ import Login from "../pages/login";
 import Register from '../pages/Register';
 import RegisterResponsavel from '../pages/Register/Responsavel';
 import RegisterEntidade from '../pages/Register/Entidade';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/" component={Main} />
+    <PrivateRoute exact path="/" component={Main} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/register/responsavel" component={RegisterResponsavel} />
     <Route exact path="/register/entidade" component={RegisterEntidade} />
     <Route exact path="/login" component={Login} />
-    <Route exact path="/pescador" component={Pescador} />
-    <Route path="/pescador/:page" component={Pescador} />
-    <Route exact path="/editar-pescador/:id" component={NovoPescador} />
-    <Route exact path="/novo-pescador" component={NovoPescador} />
-    <Route exact path="/novo-pescador/endereco/:id" component={Address} />
-    <Route exact path="/ver-pescador/:id" component={FisherInfo} />
-    <Route path="*" component={Erro404} />
+    <PrivateRoute exact path="/pescador" component={Pescador} />
+    <PrivateRoute path="/pescador/:page" component={Pescador} />
+    <PrivateRoute exact path="/editar-pescador/:id" component={NovoPescador} />
+    <PrivateRoute exact path="/novo-pescador" component={NovoPescador} />
+    <PrivateRoute exact path="/novo-pescador/endereco/:id" component={Address} />
+    <PrivateRoute exact path="/ver-pescador/:id" component={FisherInfo} />
+    <PrivateRoute path="*" component={Erro404} />
   </Switch>
 );
 
