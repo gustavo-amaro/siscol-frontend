@@ -35,7 +35,7 @@ export default function Login() {
     <Container>
       <LoginBox>
         <SideBox className="teal">
-          <span>Realize o login para acessar o sistema:<br/><br/></span>
+          <span>Realize o login para acessar o sistema: {process.env.API_URL}<br/><br/></span>
         </SideBox>
         <Form onSubmit={handleSubmitLogin}>
           <div className="input-field" style={{ width: "75%" }}>
