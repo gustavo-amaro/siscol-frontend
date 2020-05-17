@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Container, LoginBox, Form, SideBox } from "./styles";
 
 import api from "../../services/api";
 import { useState } from "react";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
+import checkIsAuthenticated from '../../routes/PrivateRoute/checkIsAuthenticated';
 
-export default function Login() {
+export default function Login({history}) {
   const [toMain, setToMain] = useState(false);
 
   async function handleSubmitLogin(e) {
@@ -28,8 +29,21 @@ export default function Login() {
     }
   }
 
+  useEffect(()=>{
+    const checkAuth = () => checkIsAuthenticated()
+        .then(() => setToMain(true))
+        .catch(() => setToMain(false));
+
+        const entidade_id = localStorage.getItem('entidade_id');
+        const token = localStorage.getItem("_token");
+        if(entidade_id && token){
+           checkAuth();
+        }
+  }, [])
+
   if (toMain) {
-    return <Redirect to="/" />;
+    //window.location.href = "/";
+    history.push('/');
   }
   return (
     <Container>

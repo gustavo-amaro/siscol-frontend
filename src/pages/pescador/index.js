@@ -117,10 +117,6 @@ export default function Pescador(props) {
             ))}
           </tbody>
         </table>
-        <div className="card-action">
-          <a href="nolink">This is a link</a>
-          <a href="nolink">This is a link</a>
-        </div>
       </div>
       {/*Modal de exclusão*/}
       <div id="modalExcluir" className="modal bottom-sheet">
