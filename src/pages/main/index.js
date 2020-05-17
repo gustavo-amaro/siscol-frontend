@@ -77,7 +77,7 @@ export default function Main() {
             <div className="card-content">
               <h2>Próximos aniversários:</h2>
               <span>
-                <table>
+                {/*<table>
                   <tbody>
                     <tr key={1}>
                       <td>José Pereira</td>
@@ -88,7 +88,7 @@ export default function Main() {
                       <td>25/04/2020</td>
                     </tr>
                   </tbody>
-                </table>
+                </table>*/}
               </span>
             </div>
           </div>
