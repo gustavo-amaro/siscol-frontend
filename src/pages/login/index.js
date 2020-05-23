@@ -25,7 +25,7 @@ export default function Login() {
       localStorage.setItem("_token", response.data.token);
       localStorage.setItem("entidade_id", response.data.user.entidade_id);
       localStorage.setItem("user_name", response.data.user.nome);
-      setToMain(true);
+      window.location.href = "/";
     }
   }
 
