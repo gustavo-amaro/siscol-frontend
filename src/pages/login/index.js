@@ -4,10 +4,10 @@ import { Container, LoginBox, Form, SideBox } from "./styles";
 
 import api from "../../services/api";
 import { useState } from "react";
-//import { Redirect } from "react-router-dom";
-import checkIsAuthenticated from '../../routes/PrivateRoute/checkIsAuthenticated';
+import checkIsAuthenticated from "../../routes/PrivateRoute/checkIsAuthenticated";
+import { Redirect } from "react-router-dom";
 
-export default function Login({history}) {
+export default function Login() {
   const [toMain, setToMain] = useState(false);
 
   async function handleSubmitLogin(e) {
@@ -29,31 +29,39 @@ export default function Login({history}) {
     }
   }
 
-  useEffect(()=>{
-    const checkAuth = () => checkIsAuthenticated()
+  useEffect(() => {
+    const checkAuth = () =>
+      checkIsAuthenticated()
         .then(() => setToMain(true))
         .catch(() => setToMain(false));
 
-        const entidade_id = localStorage.getItem('entidade_id');
-        const token = localStorage.getItem("_token");
-        if(entidade_id && token){
-           checkAuth();
-        }
-  }, [])
+    const entidade_id = localStorage.getItem("entidade_id");
+    const token = localStorage.getItem("_token");
+    if (entidade_id && token) {
+      checkAuth();
+    }
+  }, []);
 
   if (toMain) {
-    //window.location.href = "/";
-    history.push('/');
+    return <Redirect to="/" />;
   }
   return (
     <Container>
       <LoginBox>
         <SideBox className="teal">
-          <span>Realize o login para acessar o sistema: <br/><br/></span>
+          <span>
+            Realize o login para acessar o sistema: <br />
+            <br />
+          </span>
         </SideBox>
         <Form onSubmit={handleSubmitLogin}>
           <div className="input-field" style={{ width: "75%" }}>
-            <input id="first_name" name="email" type="text" autoComplete="off"/>
+            <input
+              id="first_name"
+              name="email"
+              type="text"
+              autoComplete="off"
+            />
             <label htmlFor="first_name">Email</label>
           </div>
           <div className="input-field" style={{ width: "75%" }}>
@@ -63,7 +71,7 @@ export default function Login({history}) {
           <button
             type="submit"
             className="btn"
-            style={{ background: "#682ab5", width: '70%'}}
+            style={{ background: "#682ab5", width: "70%" }}
           >
             Entrar
           </button>
