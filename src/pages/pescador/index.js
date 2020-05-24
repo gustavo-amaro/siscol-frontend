@@ -12,18 +12,10 @@ export default function Pescador(props) {
   const [idPescador, setIdPescador] = useState(0);
   const [toLogin, setToLogin] = useState(false);
 
-  const token = localStorage.getItem("_token");
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  async function getPescadores (){
-    const entidade_id = localStorage.getItem('entidade_id')
+  async function getPescadores() {
+    const entidade_id = localStorage.getItem("entidade_id");
     try {
-      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`, config);
+      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`);
       setPescadores(response.data);
     } catch (e) {
       setToLogin(true);
@@ -35,10 +27,10 @@ export default function Pescador(props) {
     if (p) {
       setPage(p);
     }
-    async function getPescadores (){
-      const entidade_id = localStorage.getItem('entidade_id')
+    async function getPescadores() {
+      const entidade_id = localStorage.getItem("entidade_id");
       try {
-        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`, config);
+        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`);
         setPescadores(response.data);
       } catch (e) {
         setToLogin(true);
@@ -48,13 +40,12 @@ export default function Pescador(props) {
 
     var elems = document.querySelectorAll(".modal");
     M.Modal.init(elems, { opacity: 0.5 });
-
-  }, [props.match.params.page, config]);
+  }, [props.match.params.page]);
 
   async function deletePescador(e) {
     e.preventDefault();
     try {
-      await api.delete(`/pescadores/${idPescador}`, config);
+      await api.delete(`/pescadores/${idPescador}`);
       getPescadores();
     } catch (e) {
       setToLogin(true);

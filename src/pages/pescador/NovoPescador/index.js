@@ -17,32 +17,24 @@ export default function NovoPescador(props) {
   const [filiacao, setFiliacao] = useState("");
   const [toLogin, setToLogin] = useState(false);
 
-  const token = localStorage.getItem("_token");
   const entidade_id = localStorage.getItem("entidade_id");
-
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
   useEffect(() => {
     const fisherId = props.match.params.id;
-    
+
     async function getFisher(fisherId) {
-      try{
-        const response = await api.get("/pescadores/" + fisherId, config);
+      try {
+        const response = await api.get("/pescadores/" + fisherId);
         setFisher(response.data);
         setCpf(cpfMask(response.data.cpf));
         setNascimento(formatDate(response.data.nascimento));
         setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
         setFiliacao(formatDate(response.data.data_de_filiacao));
         setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
-      }catch(e){
+      } catch (e) {
         setToLogin(true);
       }
-      
+
       const inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
         input.focus();
@@ -54,9 +46,8 @@ export default function NovoPescador(props) {
       setId(fisherId);
       getFisher(fisherId);
     }
-  }, [props.match.params.id, config]);
+  }, [props.match.params.id]);
 
-  
   function handleSubmitForm(e) {
     e.preventDefault();
     if (!id) addFisher(e);
@@ -80,8 +71,8 @@ export default function NovoPescador(props) {
       cei: e.target.cei.value,
     };
     const jsonData = JSON.stringify(data);
-    try{
-      const response = await api.post(`/pescadores/${entidade_id}`, jsonData, config);
+    try {
+      const response = await api.post(`/pescadores/${entidade_id}`, jsonData);
 
       if (response.data.erro) {
         alert("erro " + response.data.erro);
@@ -90,7 +81,7 @@ export default function NovoPescador(props) {
         setId(response.data.id);
         setToAddress(true);
       }
-    }catch(e){
+    } catch (e) {
       setToLogin(true);
     }
   }
@@ -113,15 +104,15 @@ export default function NovoPescador(props) {
     };
     const jsonData = JSON.stringify(data);
 
-    try{
-      let response = await api.put(`/pescadores/${id}`, jsonData, config);
+    try {
+      let response = await api.put(`/pescadores/${id}`, jsonData);
       if (response.data.updated) {
         alert("Informações do pescador foram atualizadas!");
         setToAddress(true);
       } else {
         alert("erro " + response.data.erro);
       }
-    }catch(e){
+    } catch (e) {
       setToLogin(true);
     }
   }
@@ -129,7 +120,7 @@ export default function NovoPescador(props) {
   if (toAddress) {
     return <Redirect to={`/novo-pescador/endereco/${id}`} />;
   }
-  if(toLogin){
+  if (toLogin) {
     return <Redirect to="/login" />;
   }
   return (
