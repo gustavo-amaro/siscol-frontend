@@ -15,6 +15,7 @@ import RegisterEntidade from "../pages/Register/Entidade";
 import PrivateRoute from "./PrivateRoute";
 import Auth from "./PrivateRoute/Auth";
 import Anuidade from "../pages/anuidade";
+import ShowGuia from "../pages/anuidade/ShowGuia";
 
 const Routes = () => (
   <Auth>
@@ -43,6 +44,7 @@ const Routes = () => (
       />
       <PrivateRoute exact path="/ver-pescador/:id" component={FisherInfo} />
       <PrivateRoute exact path="/anuidade" component={Anuidade} />
+      <PrivateRoute exact path="/ver-guia/:id" component={ShowGuia} />
       <PrivateRoute path="*" component={Erro404} />
     </Switch>
   </Auth>
