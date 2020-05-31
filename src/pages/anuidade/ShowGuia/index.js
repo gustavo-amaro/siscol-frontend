@@ -57,14 +57,24 @@ export default function ShowGuia(props) {
             <td>
               Endereço:
               <span className="end">
-                {guia.pescador.enderecos[0].logradouro}, N°
-                {guia.pescador.enderecos[0].numero}
+                {guia.pescador.enderecos[0]
+                  ? guia.pescador.enderecos[0].logradouro
+                  : ""}
+                , N°
+                {guia.pescador.enderecos[0]
+                  ? guia.pescador.enderecos[0].numero
+                  : ""}
               </span>
             </td>
             <td>Agência-código cedente: </td>
           </tr>
           <tr>
-            <td>Cidade: {guia.pescador.enderecos[0].cidade}</td>
+            <td>
+              Cidade:{" "}
+              {guia.pescador.enderecos[0]
+                ? guia.pescador.enderecos[0].cidade
+                : ""}
+            </td>
             <td>Conta:</td>
           </tr>
           <tr>
@@ -126,14 +136,24 @@ export default function ShowGuia(props) {
             <td>
               Endereço:
               <span className="end">
-                {guia.pescador.enderecos[0].logradouro}, N°
-                {guia.pescador.enderecos[0].numero}
+                {guia.pescador.enderecos[0]
+                  ? guia.pescador.enderecos[0].logradouro
+                  : ""}
+                , N°
+                {guia.pescador.enderecos[0]
+                  ? guia.pescador.enderecos[0].numero
+                  : ""}
               </span>
             </td>
             <td>Agência-código cedente: </td>
           </tr>
           <tr>
-            <td>Cidade: {guia.pescador.enderecos[0].cidade}</td>
+            <td>
+              Cidade:{" "}
+              {guia.pescador.enderecos[0]
+                ? guia.pescador.enderecos[0].cidade
+                : ""}
+            </td>
             <td>Conta:</td>
           </tr>
           <tr>

@@ -19,7 +19,7 @@ function Excluir({ message, deleteFunction }) {
         <a
           href="closemodal"
           onClick={(e) => e.preventDefault()}
-          className="btn modal-close"
+          className="modal-close btn-flat"
         >
           Cancelar
         </a>

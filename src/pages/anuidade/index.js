@@ -7,6 +7,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import { dateFormat } from "../../Utils";
 import api from "../../services/api";
 import ModalExcluir from "../../components/Modal/Excluir";
+import ModalNewGuia from "../../components/Modal/NewGuia";
 
 function Anuidade(props) {
   const [guias, setGuias] = useState([]);
@@ -60,9 +61,9 @@ function Anuidade(props) {
   return (
     <Container className="container-fluid">
       <h2>Anuidades</h2>
-      <Link className="btn primary" to="/nova-guia">
+      <a className="btn primary modal-trigger" href="#modalNewGuia">
         <FaPlusSquare /> Nova anuidade
-      </Link>
+      </a>
       <div className="card animate table-rounded">
         <div className="card-head"></div>
         <table className="striped">
@@ -109,6 +110,7 @@ function Anuidade(props) {
         message={"Isso apagará o registro permanentemente."}
         deleteFunction={deleteGuia}
       />
+      <ModalNewGuia />
     </Container>
   );
 }
