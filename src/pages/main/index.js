@@ -8,34 +8,26 @@ export default function Main() {
   const [totalFiliados, setTotalFiliados] = useState(0);
   const [totalMensal, setTotalMensal] = useState(0);
 
-  const token = localStorage.getItem("_token");
-  
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
   useEffect(() => {
     document.title = "Principal";
     async function getTotalFiliados() {
-      const entidade_id = localStorage.getItem('entidade_id');
+      const entidade_id = localStorage.getItem("entidade_id");
 
-        const response = await api.get(`/pescadores/${entidade_id}/registros/total/`, config);
-        setTotalFiliados(response.data.count);
-   
+      const response = await api.get(
+        `/pescadores/${entidade_id}/registros/total/`
+      );
+      setTotalFiliados(response.data.count);
     }
     async function getTotalMensal() {
-      const entidade_id = localStorage.getItem('entidade_id');
+      const entidade_id = localStorage.getItem("entidade_id");
 
-        const response = await api.get(`/guias/${entidade_id}/totalMensal`, config);
-        setTotalMensal(response.data.totalMonth);
+      const response = await api.get(`/guias/${entidade_id}/totalMensal`);
+      setTotalMensal(response.data.totalMonth);
     }
 
     getTotalFiliados();
     getTotalMensal();
-  }, [config]);
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -63,7 +55,7 @@ export default function Main() {
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
-                }).format(totalMensal?totalMensal:0)}
+                }).format(totalMensal ? totalMensal : 0)}
               </span>
             </div>
           </div>

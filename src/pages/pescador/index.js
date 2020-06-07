@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaEdit, FaEye, FaTrash, FaPlusSquare } from "react-icons/fa";
 import { Link, Redirect } from "react-router-dom";
 import api from "../../services/api";
-import M from "materialize-css";
 import "./styles.scss";
 import { dateFormat } from "../../Utils";
+import ModalExcluir from "../../components/Modal/Excluir";
 
 export default function Pescador(props) {
   const [page, setPage] = useState(1);
@@ -12,18 +12,10 @@ export default function Pescador(props) {
   const [idPescador, setIdPescador] = useState(0);
   const [toLogin, setToLogin] = useState(false);
 
-  const token = localStorage.getItem("_token");
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  async function getPescadores (){
-    const entidade_id = localStorage.getItem('entidade_id')
+  async function getPescadores() {
+    const entidade_id = localStorage.getItem("entidade_id");
     try {
-      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`, config);
+      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`);
       setPescadores(response.data);
     } catch (e) {
       setToLogin(true);
@@ -35,26 +27,22 @@ export default function Pescador(props) {
     if (p) {
       setPage(p);
     }
-    async function getPescadores (){
-      const entidade_id = localStorage.getItem('entidade_id')
+    async function getPescadores() {
+      const entidade_id = localStorage.getItem("entidade_id");
       try {
-        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`, config);
+        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`);
         setPescadores(response.data);
       } catch (e) {
         setToLogin(true);
       }
     }
     getPescadores();
-
-    var elems = document.querySelectorAll(".modal");
-    M.Modal.init(elems, { opacity: 0.5 });
-
-  }, [props.match.params.page, config]);
+  }, [props.match.params.page]);
 
   async function deletePescador(e) {
     e.preventDefault();
     try {
-      await api.delete(`/pescadores/${idPescador}`, config);
+      await api.delete(`/pescadores/${idPescador}`);
       getPescadores();
     } catch (e) {
       setToLogin(true);
@@ -70,7 +58,7 @@ export default function Pescador(props) {
       <h2>Pescador</h2>
 
       <Link className="btn primary" to="/novo-pescador">
-        Novo pescador
+        <FaPlusSquare /> Novo pescador
       </Link>
       <div className="card animate table-rounded">
         <div className="card-head"></div>
@@ -118,29 +106,15 @@ export default function Pescador(props) {
           </tbody>
         </table>
       </div>
-      {/*Modal de exclusão*/}
-      <div id="modalExcluir" className="modal bottom-sheet">
-        <div className="modal-content">
-          <h4>Tem certeza que deseja excluir?</h4>
-          <p>
-            <strong>Atenção:</strong> Serão apagados todos os registros
+      <ModalExcluir
+        message={
+          <>
+            <strong>Atenção: </strong>Serão apagados todos os registros
             relacionados a esse pescador.
-          </p>
-          <p>Esta ação não pode ser desfeita.</p>
-        </div>
-        <div className="modal-footer">
-          <a href="closemodal" className="btn modal-close">
-            Cancelar
-          </a>
-          <a
-            href="#!"
-            className="modal-close waves-effect waves-red btn red"
-            onClick={deletePescador}
-          >
-            Excluir
-          </a>
-        </div>
-      </div>
+          </>
+        }
+        deleteFunction={deletePescador}
+      />
     </div>
   );
 }

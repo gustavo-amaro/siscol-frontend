@@ -7,24 +7,16 @@ export default function Adress(props) {
   const [showNewAddress, setShowNewAddress] = useState(false);
   const [toLogin, setToLogin] = useState(false);
 
-  const token = localStorage.getItem("_token");
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  async function getFisherAddresses(){
+  async function getFisherAddresses() {
     const id = props.match.params.id;
 
-    try{
-      const response = await api.get(`/pescadores/${id}/enderecos`, config);
+    try {
+      const response = await api.get(`/pescadores/${id}/enderecos`);
 
       if (response.status === 200) {
         setFisherAddresses(response.data);
       }
-    }catch(e){
+    } catch (e) {
       setToLogin(true);
     }
 
@@ -32,17 +24,17 @@ export default function Adress(props) {
   }
 
   useEffect(() => {
-    async function getFisherAddresses(){
+    async function getFisherAddresses() {
       const id = props.match.params.id;
-      const response = await api.get(`/pescadores/${id}/enderecos`, config);
-  
+      const response = await api.get(`/pescadores/${id}/enderecos`);
+
       if (response.status === 200) {
         setFisherAddresses(response.data);
       }
       setShowNewAddress(false);
     }
     getFisherAddresses();
-  }, [config, props.match.params.id]);
+  }, [props.match.params.id]);
 
   useEffect(() => {
     if (fisherAddresses.length > 0) {
@@ -75,7 +67,7 @@ export default function Adress(props) {
     };
     const jsonData = JSON.stringify(data);
 
-    const response = await api.put(`/enderecos/${id}`, jsonData, config);
+    const response = await api.put(`/enderecos/${id}`, jsonData);
     if (response.data.erro) {
       alert("erro " + response.data.erro);
     } else if (response.status === 200) {
@@ -95,11 +87,10 @@ export default function Adress(props) {
       cep: e.target.cep.value,
     };
     const jsonData = JSON.stringify(data);
-    try{
+    try {
       const response = await api.post(
         `/pescadores/${fisherId}/enderecos`,
-        jsonData,
-        config
+        jsonData
       );
       if (response.data.erro) {
         alert("erro " + response.data.erro);
@@ -108,12 +99,12 @@ export default function Adress(props) {
         console.log(response.data);
         getFisherAddresses();
       }
-    }catch(e){
+    } catch (e) {
       setToLogin(true);
     }
   }
   async function deleteAddress(id) {
-    const response = await api.delete(`/enderecos/${id}`, config);
+    const response = await api.delete(`/enderecos/${id}`);
     if (response.data.erro) {
       alert("erro " + response.data.erro);
     } else if (response.status === 200) {
@@ -127,7 +118,7 @@ export default function Adress(props) {
     cleanInputs();
   }
 
-  if(toLogin){
+  if (toLogin) {
     return <Redirect to="/login" />;
   }
 

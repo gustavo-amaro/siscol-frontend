@@ -6,24 +6,18 @@ import "./styles.scss";
 export default function FisherInfo(props) {
   const [fisher, setFisher] = useState({});
   const [addresses, setAddresses] = useState([]);
-  const token = localStorage.getItem("_token");
-  const [config] = useState({
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+
   const fisherId = props.match.params.id;
 
-  useEffect(()=>{
-    async function getFisher(){
-      const res = await api.get(`/pescadores/${fisherId}`, config);
-      const res2 = await api.get(`/pescadores/${fisherId}/enderecos`, config);
+  useEffect(() => {
+    async function getFisher() {
+      const res = await api.get(`/pescadores/${fisherId}`);
+      const res2 = await api.get(`/pescadores/${fisherId}/enderecos`);
       setFisher(res.data);
       setAddresses(res2.data);
     }
     getFisher();
-  },[config, fisherId])
+  }, [fisherId]);
 
   return (
     <div className="container-fluid">
