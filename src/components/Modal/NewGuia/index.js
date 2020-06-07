@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css";
-import { Container, ListFisher, ListItem } from "./styles";
-import { MdAccountCircle, MdToday, MdPayment } from "react-icons/md";
+import Select from "react-select/async";
+import { Container } from "./styles";
+import { MdToday, MdPayment } from "react-icons/md";
 import { Redirect } from "react-router-dom";
 import api from "../../../services/api";
 
 function NewGuia() {
-  const [pescador, setPescador] = useState({});
+  const [pescadorId, setPescadorId] = useState(null);
   const [ano, setAno] = useState(2020);
   const [valor, setValor] = useState(200);
-  const [listFisherShow, setListFisherShow] = useState(false);
-  const [nomePescador, setNomePescador] = useState("");
-
-  const [pescadores, setPescadores] = useState([]);
 
   const [guiaId, setGuiaId] = useState(null);
   const [toShowGuia, setToShowGuia] = useState(false);
@@ -22,18 +19,8 @@ function NewGuia() {
     M.Modal.init(modals, { opacity: 0.5 });
   }, []);
 
-  useEffect(() => {
-    async function getPescadores() {
-      const entidade_id = localStorage.getItem("entidade_id");
-      const response = await api.get(`/pescadores/${entidade_id}/page/${1}`);
-      setPescadores(response.data);
-    }
-    getPescadores();
-  }, []);
-
   async function handleClickGerarGuia() {
-    //
-    if (pescador.id) {
+    if (pescadorId) {
       const data = {
         valor,
         data_emissao: Date.now(),
@@ -41,7 +28,7 @@ function NewGuia() {
       };
       const jsonData = JSON.stringify(data);
       const response = await api.post(
-        `/pescadores/${pescador.id}/guias`,
+        `/pescadores/${pescadorId}/guias`,
         jsonData
       );
       const { id } = response.data;
@@ -50,19 +37,49 @@ function NewGuia() {
     }
   }
 
-  function handleClickItem(pescador) {
-    setPescador(pescador);
-    document.getElementById("pescador_id").focus();
-    setListFisherShow(false);
+  function resetInputs() {
+    setPescadorId(null);
   }
 
-  function resetInputs() {
-    setPescador({});
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: "1px dotted pink",
+      color: state.isSelected ? "red" : "blue",
+      padding: 10,
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      width: "100%",
+      background: "#fff",
+      display: "flex",
+      height: 50,
+      borderBottom: "1px solid teal",
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = "opacity 300ms";
+
+      return { ...provided, opacity, transition };
+    },
+  };
+
+  async function loadOptions(inputValue, callback) {
+    const fishers = (await api.get(`/pescadores/nome/${inputValue}`)).data;
+    const options = [];
+    if (Array.isArray(fishers)) {
+      fishers.forEach((fisher) => {
+        options.push({ label: fisher.nome, value: fisher.id });
+      });
+    }
+
+    callback(options);
   }
 
   if (toShowGuia && guiaId) {
     return <Redirect to={`/ver-guia/${guiaId}`} />;
   }
+
   return (
     <Container id="modalNewGuia" className="modal">
       <h2>Nova Anuidade</h2>
@@ -70,17 +87,14 @@ function NewGuia() {
       <div className="modal-content">
         <div className="row">
           <div className="input-field col s12">
-            <MdAccountCircle className="prefix" />
-            <input
-              name="pescador"
-              id="pescador_id"
-              type="text"
-              autoComplete="off"
-              onFocus={() => setListFisherShow(true)}
-              value={pescador.nome ? pescador.nome : nomePescador}
-              onChange={(e) => setNomePescador(e.target.value)}
+            <Select
+              cacheOptions
+              loadOptions={loadOptions}
+              styles={customStyles}
+              defaultOptions
+              onChange={(option) => setPescadorId(option.value)}
+              placeholder={"Pescador"}
             />
-            <label htmlFor="pescador_id">Pescador</label>
           </div>
         </div>
         <div className="row">
@@ -123,14 +137,6 @@ function NewGuia() {
           Gerar guia
         </button>
       </div>
-
-      <ListFisher show={listFisherShow}>
-        {pescadores.map((pescador) => (
-          <ListItem key={pescador.id} onClick={() => handleClickItem(pescador)}>
-            {pescador.nome}
-          </ListItem>
-        ))}
-      </ListFisher>
     </Container>
   );
 }
