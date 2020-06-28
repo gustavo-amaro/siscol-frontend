@@ -100,42 +100,40 @@ export default function Pescador(props) {
               <th>Ações</th>
             </tr>
           </thead>
-          {loading ? (
-            <HashLoader size={30} />
-          ) : (
-            <tbody>
-              {pescadores.map((pescador) => (
-                <tr key={pescador.id}>
-                  <td>{pescador.rgp}</td>
-                  <td>{pescador.nome}</td>
-                  <td>{dateFormat(pescador.nascimento)}</td>
-                  <td>{pescador.rg}</td>
-                  <td>
-                    <Link
-                      className="btn blue"
-                      to={"/ver-pescador/" + pescador.id}
-                    >
-                      <FaEye />
-                    </Link>
-                    <Link
-                      className="btn green"
-                      to={`/editar-pescador/${pescador.id}`}
-                    >
-                      <FaEdit />
-                    </Link>
-                    <a
-                      className="btn red modal-trigger"
-                      href="#modalExcluir"
-                      onClick={() => setIdPescador(pescador.id)}
-                    >
-                      <FaTrash />
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          )}
+
+          <tbody>
+            {pescadores.map((pescador) => (
+              <tr key={pescador.id}>
+                <td>{pescador.rgp}</td>
+                <td>{pescador.nome}</td>
+                <td>{dateFormat(pescador.nascimento)}</td>
+                <td>{pescador.rg}</td>
+                <td>
+                  <Link
+                    className="btn blue"
+                    to={"/ver-pescador/" + pescador.id}
+                  >
+                    <FaEye />
+                  </Link>
+                  <Link
+                    className="btn green"
+                    to={`/editar-pescador/${pescador.id}`}
+                  >
+                    <FaEdit />
+                  </Link>
+                  <a
+                    className="btn red modal-trigger"
+                    href="#modalExcluir"
+                    onClick={() => setIdPescador(pescador.id)}
+                  >
+                    <FaTrash />
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
+        {loading ? <HashLoader size={30} /> : ""}
       </div>
       <ModalExcluir
         message={
