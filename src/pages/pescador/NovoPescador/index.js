@@ -121,7 +121,7 @@ export default function NovoPescador(props) {
     return <Redirect to={`/novo-pescador/endereco/${id}`} />;
   }
   if (toLogin) {
-    return <Redirect to="/login" />;
+    //return <Redirect to="/login" />;
   }
   return (
     <div className="container-fluid">
