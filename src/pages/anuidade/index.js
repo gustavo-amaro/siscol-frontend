@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Container } from "./styles";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import { FaPlusSquare } from "react-icons/fa";
+import { Container, FormSearch } from "./styles";
+import { FaEdit, FaEye, FaTrash, FaSearch, FaPlusSquare } from "react-icons/fa";
+import { HashLoader } from "react-spinners";
 
 import { dateFormat } from "../../Utils";
 import api from "../../services/api";
@@ -14,6 +14,9 @@ function Anuidade(props) {
   const [toLogin, setToLogin] = useState(false);
   const [page, setPage] = useState(1);
   const [idGuia, setIdGuia] = useState(null);
+  const [nomePescador, setNomePescador] = useState("");
+  const [loading, setLoading] = useState(false);
+
   async function getAnuidades() {
     const entidade_id = localStorage.getItem("entidade_id");
     try {
@@ -27,6 +30,7 @@ function Anuidade(props) {
   }
   useEffect(() => {
     let p = props.match.params.page;
+    setLoading(true);
     if (p) {
       setPage(p);
     }
@@ -37,6 +41,7 @@ function Anuidade(props) {
           `/entidades/${entidade_id}/guias/page/${p}`
         );
         setGuias(response.data);
+        setLoading(false);
       } catch (e) {
         setToLogin(true);
       }
@@ -58,6 +63,14 @@ function Anuidade(props) {
     }
   }
 
+  async function getGuiasByNome(e) {
+    e.preventDefault();
+    setLoading(true);
+    const guias = (await api.get(`/guias/nome/${nomePescador}`)).data;
+    setGuias(guias);
+    setLoading(false);
+  }
+
   return (
     <Container className="container-fluid">
       <h2>Anuidades</h2>
@@ -65,7 +78,21 @@ function Anuidade(props) {
         <FaPlusSquare /> Nova anuidade
       </a>
       <div className="card animate table-rounded">
-        <div className="card-head"></div>
+        <div className="card-head teal table-rounded">
+          <FormSearch onSubmit={getGuiasByNome}>
+            <input
+              type="text"
+              id="pesquisar_id"
+              placeholder="Procurar pescador"
+              className="white-text"
+              style={{ marginRight: 5 }}
+              onChange={(e) => setNomePescador(e.target.value)}
+            />
+            <button type="submit" className="btn primary">
+              <FaSearch />
+            </button>
+          </FormSearch>
+        </div>
         <table className="striped">
           <thead>
             <tr>
@@ -105,6 +132,7 @@ function Anuidade(props) {
             ))}
           </tbody>
         </table>
+        {loading ? <HashLoader size={30} /> : ""}
       </div>
       <ModalExcluir
         message={"Isso apagará o registro permanentemente."}
