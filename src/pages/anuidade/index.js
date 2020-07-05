@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Container, FormSearch } from "./styles";
-import { FaEdit, FaEye, FaTrash, FaSearch, FaPlusSquare } from "react-icons/fa";
+import {
+  FaEdit,
+  FaEye,
+  FaTrash,
+  FaSearch,
+  FaPlusSquare,
+  FaMoneyBill,
+} from "react-icons/fa";
 import { HashLoader } from "react-spinners";
 
 import { dateFormat } from "../../Utils";
@@ -71,6 +78,14 @@ function Anuidade(props) {
     setLoading(false);
   }
 
+  async function handlePayNextYear(pescador_id) {
+    setLoading(true);
+    const guia = (
+      await api.post(`/guias/paynextyear`, JSON.stringify({ pescador_id }))
+    ).data;
+    props.history.push(`/ver-guia/${guia.id}`);
+  }
+
   return (
     <Container className="container-fluid">
       <h2>Anuidades</h2>
@@ -127,6 +142,13 @@ function Anuidade(props) {
                   >
                     <FaTrash />
                   </a>
+                  <button
+                    className="btn primary"
+                    onClick={() => handlePayNextYear(guia.pescador.id)}
+                    style={{ marginLeft: 5 }}
+                  >
+                    <FaMoneyBill /> Pagar próximo ano
+                  </button>
                 </td>
               </tr>
             ))}
