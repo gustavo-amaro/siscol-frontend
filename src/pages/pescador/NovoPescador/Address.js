@@ -1,11 +1,45 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
+import M from "materialize-css";
+import { cepMask } from "../../../Utils/Masks";
 
 export default function Adress(props) {
   const [fisherAddresses, setFisherAddresses] = useState([]);
   const [showNewAddress, setShowNewAddress] = useState(false);
   const [toLogin, setToLogin] = useState(false);
+  const [ceps, setCeps] = useState([]);
+  const [cep, setCep] = useState("");
+
+  const states = {
+    AC: "Acre",
+    AL: "Alagoas",
+    AP: "Amapá",
+    AM: "Amazonas",
+    BA: "Bahia",
+    CE: "Ceará",
+    DF: "Distrito Federal",
+    ES: "Espírito Santo",
+    GO: "Goiás",
+    MA: "Maranhão",
+    MT: "Mato Grosso",
+    MS: "Mato Grosso do Sul",
+    MG: "Minas Gerais",
+    PA: "Pará",
+    PB: "Paraíba",
+    PR: "Paraná",
+    PE: "Pernambuco",
+    PI: "Piauí",
+    RJ: "Rio de Janeiro",
+    RN: "Rio Grande do Norte",
+    RS: "Rio Grande do Sul",
+    RO: "Rondônia",
+    RR: "Roraima",
+    SC: "Santa Catarina",
+    SP: "São Paulo",
+    SE: "Sergipe",
+    TO: "Tocantins",
+  };
 
   async function getFisherAddresses() {
     const id = props.match.params.id;
@@ -15,6 +49,11 @@ export default function Adress(props) {
 
       if (response.status === 200) {
         setFisherAddresses(response.data);
+        const ceps = [];
+        response.data.forEach((address) => {
+          ceps.push(cepMask(address.cep));
+        });
+        setCeps(ceps);
       }
     } catch (e) {
       setToLogin(true);
@@ -30,6 +69,11 @@ export default function Adress(props) {
 
       if (response.status === 200) {
         setFisherAddresses(response.data);
+        const ceps = [];
+        response.data.forEach((address) => {
+          ceps.push(cepMask(address.cep));
+        });
+        setCeps(ceps);
       }
       setShowNewAddress(false);
     }
@@ -63,7 +107,7 @@ export default function Adress(props) {
       bairro: e.target.bairro.value,
       cidade: e.target.cidade.value,
       estado: e.target.estado.value,
-      cep: e.target.cep.value,
+      cep: e.target.cep.value.replace(/\D/g, ""),
     };
     const jsonData = JSON.stringify(data);
 
@@ -84,7 +128,7 @@ export default function Adress(props) {
       bairro: e.target.bairro.value,
       cidade: e.target.cidade.value,
       estado: e.target.estado.value,
-      cep: e.target.cep.value,
+      cep: e.target.cep.value.replace(/\D/g, ""),
     };
     const jsonData = JSON.stringify(data);
     try {
@@ -96,7 +140,6 @@ export default function Adress(props) {
         alert("erro " + response.data.erro);
       } else if (response.status === 200) {
         alert("Endereço adicionado ao pescador!");
-        console.log(response.data);
         getFisherAddresses();
       }
     } catch (e) {
@@ -118,6 +161,11 @@ export default function Adress(props) {
     cleanInputs();
   }
 
+  useEffect(() => {
+    let elems = document.querySelectorAll("select");
+    M.FormSelect.init(elems, {});
+  }, [fisherAddresses]);
+
   if (toLogin) {
     return <Redirect to="/login" />;
   }
@@ -125,7 +173,7 @@ export default function Adress(props) {
   return (
     <div className="container-fluid">
       <h2>Endereço(s) do pescador</h2>
-      {fisherAddresses.map((address) => {
+      {fisherAddresses.map((address, index) => {
         return (
           <div className="row card" key={address.id}>
             <form
@@ -171,12 +219,18 @@ export default function Adress(props) {
                   <label htmlFor={"cidade" + address.id}>Cidade</label>
                 </div>
                 <div className="input-field col m4">
-                  <input
-                    id={"estado" + address.id}
-                    type="text"
-                    name="estado"
+                  <select
                     defaultValue={address.estado}
-                  />
+                    name="estado"
+                    id={"estado" + address.id}
+                  >
+                    {Object.keys(states).map((sigla) => (
+                      <option key={sigla} value={sigla}>
+                        {sigla}
+                      </option>
+                    ))}
+                  </select>
+
                   <label htmlFor={"estado" + address.id}>Estado</label>
                 </div>
                 <div className="input-field col m4 s12">
@@ -184,7 +238,14 @@ export default function Adress(props) {
                     id={"cep" + address.id}
                     type="text"
                     name="cep"
-                    defaultValue={address.cep}
+                    value={ceps[index]}
+                    onChange={(e) =>
+                      setCeps([
+                        ...ceps.slice(0, index),
+                        cepMask(e.target.value),
+                        ...ceps.slice(index + 1),
+                      ])
+                    }
                   />
                   <label htmlFor={"cep" + address.id}>CEP</label>
                 </div>
@@ -237,11 +298,26 @@ export default function Adress(props) {
               <label htmlFor="cidade">Cidade</label>
             </div>
             <div className="input-field col m4">
-              <input id="estado" type="text" name="estado" />
+              <select name="estado" id={"estado"}>
+                <option disabled selected>
+                  Escolha um estado:
+                </option>
+                {Object.keys(states).map((sigla) => (
+                  <option key={sigla} value={sigla}>
+                    {sigla}
+                  </option>
+                ))}
+              </select>
               <label htmlFor="estado">Estado</label>
             </div>
             <div className="input-field col m4 s12">
-              <input id="cep" type="text" name="cep" />
+              <input
+                id="cep"
+                type="text"
+                name="cep"
+                value={cep}
+                onChange={(e) => setCep(cepMask(e.target.value))}
+              />
               <label htmlFor="cep">CEP</label>
             </div>
           </div>

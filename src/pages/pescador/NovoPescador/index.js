@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 
 import { Redirect } from "react-router-dom";
-import { cpfMask } from "../../../Utils/Masks";
+import { cpfMask, nitMask, ceiMask } from "../../../Utils/Masks";
 import { formatDate } from "../../../Utils";
 
 export default function NovoPescador(props) {
   const [toAddress, setToAddress] = useState(false);
   const [id, setId] = useState(null);
   const [cpf, setCpf] = useState("");
+  const [nit, setNit] = useState("");
+  const [cei, setCei] = useState("");
   const [fisher, setFisher] = useState({});
   const [nascimento, setNascimento] = useState("");
   const [primeiroRgp, setPrimeiroRgp] = useState("");
@@ -27,6 +29,8 @@ export default function NovoPescador(props) {
         const response = await api.get("/pescadores/" + fisherId);
         setFisher(response.data);
         setCpf(cpfMask(response.data.cpf));
+        setCei(ceiMask(response.data.cei));
+        setNit(nitMask(response.data.nit));
         setNascimento(formatDate(response.data.nascimento));
         setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
         setFiliacao(formatDate(response.data.data_de_filiacao));
@@ -56,19 +60,16 @@ export default function NovoPescador(props) {
   async function addFisher(e) {
     const data = {
       nome: e.target.nome.value.toUpperCase(),
-      cpf: e.target.cpf.value
-        .replace(".", "")
-        .replace(".", "")
-        .replace("-", ""),
+      cpf: e.target.cpf.value.replace(/\D/g, ""),
       rg: e.target.rg.value.toUpperCase(),
       nascimento: e.target.nascimento.value,
       rgp: e.target.rgp.value.toUpperCase(),
       data_de_emissao_rgp: e.target.data_de_emissao_rgp.value,
       data_do_primeiro_rgp: e.target.data_do_primeiro_rgp.value,
-      titulo: e.target.titulo.value,
+      titulo: e.target.titulo.value.replace(/\D/g, ""),
       data_de_filiacao: e.target.data_de_filiacao.value,
-      nit: e.target.nit.value,
-      cei: e.target.cei.value,
+      nit: e.target.nit.value.replace(/\D/g, ""),
+      cei: e.target.cei.value.replace(/\D/g, ""),
     };
     const jsonData = JSON.stringify(data);
     try {
@@ -88,19 +89,16 @@ export default function NovoPescador(props) {
   async function updateFisher(e) {
     const data = {
       nome: e.target.nome.value.toUpperCase(),
-      cpf: e.target.cpf.value
-        .replace(".", "")
-        .replace(".", "")
-        .replace("-", ""),
+      cpf: e.target.cpf.value.replace(/\D/g, ""),
       rg: e.target.rg.value.toUpperCase(),
       nascimento: e.target.nascimento.value,
       rgp: e.target.rgp.value.toUpperCase(),
       data_de_emissao_rgp: e.target.data_de_emissao_rgp.value,
       data_do_primeiro_rgp: e.target.data_do_primeiro_rgp.value,
-      titulo: e.target.titulo.value,
+      titulo: e.target.titulo.value.replace(/\D/g, ""),
       data_de_filiacao: e.target.data_de_filiacao.value,
-      nit: e.target.nit.value,
-      cei: e.target.cei.value,
+      nit: e.target.nit.value.replace(/\D/g, ""),
+      cei: e.target.cei.value.replace(/\D/g, ""),
     };
     const jsonData = JSON.stringify(data);
 
@@ -160,7 +158,12 @@ export default function NovoPescador(props) {
               <label htmlFor="cpf">CPF</label>
             </div>
             <div className="input-field col s12 m4">
-              <input id="rg" type="text" defaultValue={fisher.rg} />
+              <input
+                id="rg"
+                type="text"
+                maxLength={15}
+                defaultValue={fisher.rg}
+              />
               <label htmlFor="rg">RG</label>
             </div>
             <div className="input-field col s12 m4">
@@ -168,6 +171,7 @@ export default function NovoPescador(props) {
                 id="rgp"
                 type="text"
                 name="rgp"
+                maxLength={15}
                 defaultValue={fisher.rgp}
               />
               <label htmlFor="rgp">RGP</label>
@@ -209,6 +213,7 @@ export default function NovoPescador(props) {
                 id="titulo"
                 name="titulo"
                 type="text"
+                maxLength={15}
                 defaultValue={fisher.titulo}
               />
               <label htmlFor="titulo">Titulo</label>
@@ -219,6 +224,8 @@ export default function NovoPescador(props) {
                 type="text"
                 name="nit"
                 defaultValue={fisher.nit}
+                value={nit}
+                onChange={(e) => setNit(nitMask(e.target.value))}
               />
               <label htmlFor="nit">NIT</label>
             </div>
@@ -228,6 +235,8 @@ export default function NovoPescador(props) {
                 type="text"
                 name="cei"
                 defaultValue={fisher.cei}
+                value={cei}
+                onChange={(e) => setCei(ceiMask(e.target.value))}
               />
               <label htmlFor="cei">CEI</label>
             </div>
