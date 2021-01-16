@@ -1,4 +1,6 @@
-.divider{
+import styled from 'styled-components';
+
+export const Container = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
@@ -8,4 +10,4 @@
         height: 1px;
         margin: 2px 0;
     }
-}
+`;

@@ -1,7 +1,7 @@
 import React from 'react';
-import './styles.scss';
+import {Container} from './styles'
 
 export default function divider(){
 
-    return <div className="divider"><div></div></div>;
+    return <Container className="divider"><div></div></Container>;
 }

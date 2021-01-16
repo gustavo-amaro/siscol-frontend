@@ -27,7 +27,7 @@ export const Container = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(#682ab5, #2D0A5A);
+  background: linear-gradient(#236BCC, #4450E0);
   flex-wrap: wrap-reverse;
 `;
 

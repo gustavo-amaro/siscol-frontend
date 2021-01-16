@@ -1,5 +1,8 @@
-@import "../../animations.scss";
-.fragment {
+import styled from 'styled-components';
+import "../../animations.scss";
+
+export const Container = styled.div`
+  .fragment {
   border-left: 3px solid;
   border-radius: 5px;
   margin-right: 10px;
@@ -23,3 +26,4 @@
     }
   }
 }
+`;

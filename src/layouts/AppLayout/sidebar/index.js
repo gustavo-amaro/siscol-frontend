@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./styles.scss";
+import {Container} from './styles';
 import {
   FaFish,
   FaHome,
@@ -33,7 +33,7 @@ export default function Sidebar() {
     });
   }, []);
   return (
-    <div className="sidebar">
+    <Container className="sidebar">
       <div className="brand primary-dark">
         <span className="icon">
           <FaFish color="#b8c7ce" />
@@ -68,6 +68,6 @@ export default function Sidebar() {
           </a>
         </li>
       </ul>
-    </div>
+    </Container>
   );
 }

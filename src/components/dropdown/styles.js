@@ -1,5 +1,7 @@
-.dropdown{
-    list-style: none;
+import styled from 'styled-components';
+
+export const Container = styled.ul`
+  list-style: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,4 +17,4 @@
     a{
         color: black;
     }
-}
+`;

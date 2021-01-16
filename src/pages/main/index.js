@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaUser, FaDollarSign, FaBirthdayCake } from "react-icons/fa";
 
-import "./styles.scss";
+import {Container} from './styles';
 import api from "../../services/api";
 
 export default function Main() {
@@ -30,7 +30,7 @@ export default function Main() {
   }, []);
 
   return (
-    <div className="container-fluid">
+    <Container className="container-fluid">
       <div className="row">
         <div className="col l4 m6 s12">
           <div className="card-panel fragment border-blue">
@@ -86,6 +86,6 @@ export default function Main() {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
 import { dateFormat } from "../../../Utils";
-import "./styles.scss";
+import {Container} from './styles';
 
 export default function FisherInfo(props) {
   const [fisher, setFisher] = useState({});
@@ -20,7 +20,7 @@ export default function FisherInfo(props) {
   }, [fisherId]);
 
   return (
-    <div className="container-fluid">
+    <Container className="container-fluid">
       <h2 className="center">{fisher.nome}</h2>
       <div className="row">
         <h3 className="wrapper-rounded center" style={{ fontWeight: "bold" }}>
@@ -151,6 +151,6 @@ export default function FisherInfo(props) {
           </div>
         );
       })}
-    </div>
+    </Container>
   );
 }
