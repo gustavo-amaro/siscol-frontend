@@ -13,7 +13,7 @@ export const Container = styled.div`
   .brand {
     display: flex;
     width: 100%;
-    height: 63px;
+    height: 100px;
     line-height: 0px;
     align-items: center;
     justify-content: center;
@@ -33,11 +33,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 0 !important;
-    .header {
-      background-color: #1a2226;
-      margin-top: 0;
-      color: #4b646f !important;
-    }
+    align-items: center;
   }
   li {
     display: flex;
@@ -46,8 +42,10 @@ export const Container = styled.div`
     transition: all 0.4s;
     font-size: 12pt;
     width: 100%;
+    align-items: center;
+    justify-content: center;
     &:hover {
-      background: rgba($color: #000000, $alpha: 0.2);
+      background: rgba(0, 0, 0, 0.2);
       color: #fff;
     }
     a {
@@ -63,6 +61,9 @@ export const Container = styled.div`
       animation-name: moveHide;
       animation-duration: 400ms;
       animation-fill-mode: forwards;
+    }
+    .item {
+      width: 100px;
     }
   }
 }

@@ -2,6 +2,13 @@ import {createGlobalStyle} from 'styled-components'
 
 
 export default createGlobalStyle`
+:root{
+    --primary: #2c77f2;
+    --primary-dark: #163d7d;
+    --secondary: #ffcc29;
+    --danger: #d32121;
+    --success: #27B54B;
+  }
 .App {
   position: absolute;
   display: flex;
@@ -23,10 +30,10 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
   .primary {
-    background-color: #682ab5 !important;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark))!important;
   }
   .primary-dark {
-    background-color: #5a259c !important;
+    background-color: var(--primary-dark);
   }
   .border-teal {
     border-color: #009688;
@@ -37,8 +44,8 @@ export default createGlobalStyle`
     color: #9c27b0;
   }
   .border-primary {
-    border-color: #682ab5;
-    color: #682ab5;
+    border-color: var(--primary);
+    color: var(----primary);
   }
   .border-blue {
     border-color: #0892c9;

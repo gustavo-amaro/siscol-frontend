@@ -30,11 +30,11 @@ export default function Topbar() {
 
   return (
     <nav>
-      <div className="nav-wrapper primary">
+      <div className="nav-wrapper white">
         <ul id="nav-mobile" className="left">
           <li>
             <a href="sidebar" onClick={toggleSidebar}>
-              <FaBars />
+              <FaBars color={'#4a4a4a'}/>
             </a>
           </li>
         </ul>
@@ -44,8 +44,9 @@ export default function Topbar() {
               href="#!"
               className="dropdown-trigger"
               data-target="dropdownUser"
+              style={{color: '#4a4a4a'}}
             >
-              {userName} <FaUser />
+              {userName} <FaUser color="#4a4a4a"/>
             </a>
           </li>
         </ul>

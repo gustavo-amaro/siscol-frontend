@@ -33,39 +33,43 @@ export default function Sidebar() {
     });
   }, []);
   return (
-    <Container className="sidebar">
-      <div className="brand primary-dark">
-        <span className="icon">
-          <FaFish color="#b8c7ce" />
-        </span>
+    <Container className="sidebar primary">
+      <div className="brand primary">
         <span className="title white-text">
-          SISCOL<sup>0.1</sup>
+          <img src={require('./assets/logo-branca.png')} alt='logo siscol' style={{maxWidth: 150, maxHeight: 100}}/>
         </span>
       </div>
 
       <ul>
-        <li className="header">Principal</li>
         <li>
-          <Link to="/">
-            <FaHome size={14} color="#b8c7ce" /> Início
-          </Link>
+          <div className="item">
+            <Link to="/">
+              <FaHome size={14} color="#fff" /> Início
+            </Link>
+          </div>
         </li>
 
         <li>
+        <div className="item">
           <Link to="/pescador">
-            <FaSwimmer size={14} color="#b8c7ce" /> Pescador
+            <FaSwimmer size={14} color="#fff" /> Pescador
           </Link>
+          </div>
         </li>
         <li>
+        <div className="item">
           <Link to="/anuidade">
-            <FaMoneyCheckAlt size={14} color="#b8c7ce" /> Anuidade
+            <FaMoneyCheckAlt size={14} color="#fff" /> Anuidade
           </Link>
+          </div>
         </li>
 
         <li>
+        <div className="item">
           <a href="fake">
-            <FaChartBar size={14} color="#b8c7ce" /> Relatórios
+            <FaChartBar size={14} color="#fff" /> Relatórios
           </a>
+          </div>
         </li>
       </ul>
     </Container>
