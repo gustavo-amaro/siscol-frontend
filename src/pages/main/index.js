@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaUser, FaDollarSign, FaBirthdayCake } from "react-icons/fa";
 
-import {Container} from './styles';
+import { Container } from "./styles";
 import api from "../../services/api";
 
 export default function Main() {
@@ -45,7 +45,7 @@ export default function Main() {
         </div>
 
         <div className="col l4 m6 s12">
-          <div className="card-panel fragment border-teal">
+          <div className="card-panel fragment border-secondary">
             <div className="icon">
               <FaDollarSign />
             </div>

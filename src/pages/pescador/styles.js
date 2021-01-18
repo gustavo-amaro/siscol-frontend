@@ -16,4 +16,9 @@ export const FormSearch = styled.form`
   width: 40%;
   align-items: center;
   margin-left: 20px;
+  input {
+    &::placeholder {
+      color: #fff;
+    }
+  }
 `;

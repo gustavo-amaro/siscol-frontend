@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 
-import { Container, LoginBox, Form, FooterBox, TextLogin, Square } from "./styles";
+import {
+  Container,
+  LoginBox,
+  Form,
+  FooterBox,
+  TextLogin,
+  Square,
+} from "./styles";
 
 import api from "../../services/api";
 import { useState } from "react";
 import checkIsAuthenticated from "../../routes/PrivateRoute/checkIsAuthenticated";
 import { Redirect } from "react-router-dom";
-import {FaArrowRight} from 'react-icons/fa';
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Login() {
   const [toMain, setToMain] = useState(false);
@@ -49,7 +56,8 @@ export default function Login() {
   return (
     <Container>
       <TextLogin>
-      O SISCOL é um sistema completo para gestão da sua colônia de pescadores. Tenha total controle sobre seus afiliados de forma simples e segura!
+        O SISCOL é um sistema completo para gestão da sua colônia de pescadores.
+        Tenha total controle sobre seus afiliados de forma simples e segura!
       </TextLogin>
       <LoginBox>
         <Form onSubmit={handleSubmitLogin}>
@@ -69,28 +77,29 @@ export default function Login() {
           <div className="button-submit">
             <button
               type="submit"
-              className="btn teal border-radius"
+              className="btn secondary border-radius"
               title="Fazer login"
             >
               <FaArrowRight />
             </button>
           </div>
         </Form>
-        <FooterBox className="teal">
+        <FooterBox className="secondary">
           <span>
-          Não possui uma conta?<br />
-          Registre-se gratuitamente.
+            Não possui uma conta?
+            <br />
+            Registre-se gratuitamente.
           </span>
         </FooterBox>
       </LoginBox>
 
-      <Square top={170} left={350} delay={100}/>
-      <Square top={330} left={50} delay={150}/>
-      <Square bottom={100} left={400} delay={50}/>
-      <Square top={80} right={150} delay={250}/>
-      <Square top={100} right={400} delay={250}/>
-      <Square bottom={50} right={200} delay={200}/>
-      <Square bottom={20} right={600} delay={300}/>
+      <Square top={170} left={350} delay={100} />
+      <Square top={330} left={50} delay={150} />
+      <Square bottom={100} left={400} delay={50} />
+      <Square top={80} right={150} delay={250} />
+      <Square top={100} right={400} delay={250} />
+      <Square bottom={50} right={200} delay={200} />
+      <Square bottom={20} right={600} delay={300} />
     </Container>
   );
 }

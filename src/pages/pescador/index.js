@@ -75,7 +75,7 @@ export default function Pescador(props) {
         <FaPlusSquare /> Novo pescador
       </Link>
       <div className="card animate table-rounded">
-        <div className="card-head teal table-rounded">
+        <div className="card-head secondary table-rounded">
           <FormSearch onSubmit={getPescadoresByNome}>
             <input
               type="text"
@@ -110,7 +110,7 @@ export default function Pescador(props) {
                 <td>{pescador.rg}</td>
                 <td>
                   <Link
-                    className="btn blue"
+                    className="btn primary"
                     to={"/ver-pescador/" + pescador.id}
                   >
                     <FaEye />

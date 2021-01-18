@@ -54,7 +54,7 @@ function NewGuia() {
       background: "#fff",
       display: "flex",
       height: 50,
-      borderBottom: "1px solid teal",
+      borderBottom: "1px solid blue",
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;

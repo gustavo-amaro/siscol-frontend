@@ -1,25 +1,35 @@
-import {createGlobalStyle} from 'styled-components'
-
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 :root{
     --primary: #2c77f2;
     --primary-dark: #163d7d;
-    --secondary: #ffcc29;
+    --secondary: #a4bfed;
     --danger: #d32121;
     --success: #27B54B;
+    --backcolor: #dde3ed;
   }
+
+  .secondary{
+    background: var(--secondary);
+    color: #fff;
+  }
+
 .App {
   position: absolute;
   display: flex;
   min-height: 100%;
   width: 100%;
+  color: #4a4a4a;
+  .text-color{
+    color: #4a4a4a;
+  }
   .content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    background: rgb(230, 230, 230);
+    background: var(--backcolor);
   }
   .main-content {
     display: flex;
@@ -35,7 +45,7 @@ export default createGlobalStyle`
   .primary-dark {
     background-color: var(--primary-dark);
   }
-  .border-teal {
+  .border-secondary {
     border-color: #009688;
     color: #009688;
   }
@@ -53,6 +63,9 @@ export default createGlobalStyle`
   }
   .border-radius{
     border-radius: 10px;
+  }
+  .backcolor{
+    background: var(--backcolor);
   }
 }
 

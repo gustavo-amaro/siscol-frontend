@@ -93,7 +93,7 @@ function Anuidade(props) {
         <FaPlusSquare /> Nova anuidade
       </a>
       <div className="card animate table-rounded">
-        <div className="card-head teal table-rounded">
+        <div className="card-head secondary table-rounded">
           <FormSearch onSubmit={getGuiasByNome}>
             <input
               type="text"

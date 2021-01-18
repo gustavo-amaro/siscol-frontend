@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 export default function Topbar() {
   const dispatch = useDispatch();
   const [toLogin, setToLogin] = useState(false);
-  const userName = localStorage.getItem('user_name');
+  const userName = localStorage.getItem("user_name");
 
   useEffect(() => {
     var elems = document.querySelectorAll(".dropdown-trigger");
@@ -18,13 +18,13 @@ export default function Topbar() {
     dispatch({ type: "TOGGLE_SIDEBAR" });
   }
 
-  function signoff(){
-    localStorage.removeItem('entidade_id');
-    localStorage.removeItem('_token');
+  function signoff() {
+    localStorage.removeItem("entidade_id");
+    localStorage.removeItem("_token");
     setToLogin(true);
   }
 
-  if(toLogin){
+  if (toLogin) {
     return <Redirect to="/login" />;
   }
 
@@ -33,8 +33,8 @@ export default function Topbar() {
       <div className="nav-wrapper white">
         <ul id="nav-mobile" className="left">
           <li>
-            <a href="sidebar" onClick={toggleSidebar}>
-              <FaBars color={'#4a4a4a'}/>
+            <a href="sidebar" className="text-color" onClick={toggleSidebar}>
+              <FaBars />
             </a>
           </li>
         </ul>
@@ -42,11 +42,10 @@ export default function Topbar() {
           <li>
             <a
               href="#!"
-              className="dropdown-trigger"
+              className="dropdown-trigger text-color"
               data-target="dropdownUser"
-              style={{color: '#4a4a4a'}}
             >
-              {userName} <FaUser color="#4a4a4a"/>
+              {userName} <FaUser />
             </a>
           </li>
         </ul>
