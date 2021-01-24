@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="page-footer white">
+    <footer className="page-footer white z-depth-2">
       <div className="container-fluid text-color">© 2019 - 2020</div>
     </footer>
   );

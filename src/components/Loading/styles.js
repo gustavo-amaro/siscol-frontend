@@ -7,5 +7,5 @@ export const Container = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: #682ab5;
+  background: linear-gradient(var(--primary), var(--primary-dark));
 `;

@@ -110,7 +110,7 @@ export default function Pescador(props) {
                 <td>{pescador.rg}</td>
                 <td>
                   <Link
-                    className="btn primary"
+                    className="btn blue"
                     to={"/ver-pescador/" + pescador.id}
                   >
                     <FaEye />

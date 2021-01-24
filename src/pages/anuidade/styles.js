@@ -19,4 +19,9 @@ export const FormSearch = styled.form`
   button {
     background: transparent;
   }
+  input {
+    &::placeholder {
+      color: #fff;
+    }
+  }
 `;
