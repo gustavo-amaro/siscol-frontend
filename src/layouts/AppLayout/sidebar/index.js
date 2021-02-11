@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import {Container} from './styles';
 import {
-  FaFish,
   FaHome,
   FaSwimmer,
   FaMoneyCheckAlt,
