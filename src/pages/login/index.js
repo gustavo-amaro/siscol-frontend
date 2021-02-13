@@ -55,6 +55,7 @@ export default function Login() {
   }
   return (
     <Container>
+      <img id="logo-login" src={require('../../assets/logo-branca.png')} alt='logo siscol'/>
       <TextLogin>
         O SISCOL é um sistema completo para gestão da sua colônia de pescadores.
         Tenha total controle sobre seus afiliados de forma simples e segura!

@@ -29,6 +29,13 @@ export const Container = styled.div`
   align-items: center;
   background: linear-gradient(var(--primary), var(--primary-dark));
   flex-wrap: wrap-reverse;
+  #logo-login{
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    max-width: 180px; 
+    max-height: 130px;
+  }
 `;
 
 export const TextLogin = styled.h1`
