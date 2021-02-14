@@ -5,6 +5,7 @@ import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
 import { cpfMask, nitMask, ceiMask } from "../../../Utils/Masks";
 import { formatDate } from "../../../Utils";
+import axios from "axios";
 
 export default function NovoPescador(props) {
   const [toAddress, setToAddress] = useState(false);
@@ -18,6 +19,7 @@ export default function NovoPescador(props) {
   const [emissaoRgp, setEmissaoRgp] = useState("");
   const [filiacao, setFiliacao] = useState("");
   const [toLogin, setToLogin] = useState(false);
+  const [foto, setFoto] = useState(null);
 
   const entidade_id = localStorage.getItem("entidade_id");
 
@@ -35,6 +37,7 @@ export default function NovoPescador(props) {
         setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
         setFiliacao(formatDate(response.data.data_de_filiacao));
         setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
+        setFoto(response.data.foto);
       } catch (e) {
         setToLogin(true);
       }
@@ -70,6 +73,7 @@ export default function NovoPescador(props) {
       data_de_filiacao: e.target.data_de_filiacao.value,
       nit: e.target.nit.value.replace(/\D/g, ""),
       cei: e.target.cei.value.replace(/\D/g, ""),
+      foto
     };
     const jsonData = JSON.stringify(data);
     try {
@@ -99,6 +103,7 @@ export default function NovoPescador(props) {
       data_de_filiacao: e.target.data_de_filiacao.value,
       nit: e.target.nit.value.replace(/\D/g, ""),
       cei: e.target.cei.value.replace(/\D/g, ""),
+      foto
     };
     const jsonData = JSON.stringify(data);
 
@@ -114,6 +119,25 @@ export default function NovoPescador(props) {
       setToLogin(true);
     }
   }
+
+  useEffect(() => {
+    console.log(`nascimento: ${nascimento}`);
+    console.log(`cpf: ${cpf}`);
+    if(nascimento && cpf.length === 14){
+      const numerosCpf = cpf.replace(/\D/g, "");
+      const nascimentoArray = nascimento.split('-');
+      axios.get(`https://sistemasweb.agricultura.gov.br/rgp/web/sargp/index.php/atividade_pesca_profissional/atividade/RegularidadePescador?cpf=${numerosCpf}&dtnascimento=${nascimentoArray[2]}%2F${nascimentoArray[1]}%2F${nascimentoArray[0]}`, 
+        {
+          headers: {
+            "Referer": 'https://sistemasweb.agricultura.gov.br/rgp/web/sargp/index.php/atividade_pesca_profissional/atividade/create/',
+            "origin": 'https://sistemasweb.agricultura.gov.br/rgp/web/sargp/index.php/atividade_pesca_profissional/atividade/create'
+          }
+        }
+      ).then(response => {
+        console.log(response)
+      })
+    }
+  }, [nascimento, cpf]);
 
   if (toAddress) {
     return <Redirect to={`/novo-pescador/endereco/${id}`} />;
@@ -142,6 +166,7 @@ export default function NovoPescador(props) {
                 name="nascimento"
                 type="date"
                 defaultValue={nascimento}
+                onChange={e => setNascimento(e.target.value)}
               />
               <label htmlFor="nascimento">Data de nascimento</label>
             </div>
