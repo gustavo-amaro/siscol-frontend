@@ -18,6 +18,7 @@ export default function NovoPescador(props) {
   const [emissaoRgp, setEmissaoRgp] = useState("");
   const [filiacao, setFiliacao] = useState("");
   const [toLogin, setToLogin] = useState(false);
+  
 
   const entidade_id = localStorage.getItem("entidade_id");
 
