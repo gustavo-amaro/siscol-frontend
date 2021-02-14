@@ -5,6 +5,7 @@ import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
 import { cpfMask, nitMask, ceiMask } from "../../../Utils/Masks";
 import { formatDate } from "../../../Utils";
+import axios from "axios";
 
 export default function NovoPescador(props) {
   const [toAddress, setToAddress] = useState(false);
@@ -18,7 +19,6 @@ export default function NovoPescador(props) {
   const [emissaoRgp, setEmissaoRgp] = useState("");
   const [filiacao, setFiliacao] = useState("");
   const [toLogin, setToLogin] = useState(false);
-  
 
   const entidade_id = localStorage.getItem("entidade_id");
 
@@ -36,6 +36,7 @@ export default function NovoPescador(props) {
         setPrimeiroRgp(formatDate(response.data.data_do_primeiro_rgp));
         setFiliacao(formatDate(response.data.data_de_filiacao));
         setEmissaoRgp(formatDate(response.data.data_de_emissao_rgp));
+        setFoto(response.data.foto);
       } catch (e) {
         setToLogin(true);
       }
@@ -71,6 +72,7 @@ export default function NovoPescador(props) {
       data_de_filiacao: e.target.data_de_filiacao.value,
       nit: e.target.nit.value.replace(/\D/g, ""),
       cei: e.target.cei.value.replace(/\D/g, ""),
+      foto
     };
     const jsonData = JSON.stringify(data);
     try {
@@ -100,6 +102,7 @@ export default function NovoPescador(props) {
       data_de_filiacao: e.target.data_de_filiacao.value,
       nit: e.target.nit.value.replace(/\D/g, ""),
       cei: e.target.cei.value.replace(/\D/g, ""),
+      foto
     };
     const jsonData = JSON.stringify(data);
 
