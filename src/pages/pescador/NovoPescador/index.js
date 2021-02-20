@@ -19,8 +19,6 @@ export default function NovoPescador(props) {
   const [filiacao, setFiliacao] = useState("");
   const [toLogin, setToLogin] = useState(false);
 
-  const entidade_id = localStorage.getItem("entidade_id");
-
   useEffect(() => {
     const fisherId = props.match.params.id;
 
@@ -73,7 +71,7 @@ export default function NovoPescador(props) {
     };
     const jsonData = JSON.stringify(data);
     try {
-      const response = await api.post(`/pescadores/${entidade_id}`, jsonData);
+      const response = await api.post("/pescadores", jsonData);
 
       if (response.data.erro) {
         alert("erro " + response.data.erro);
