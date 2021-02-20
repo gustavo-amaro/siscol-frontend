@@ -14,6 +14,7 @@ export default function Main() {
       const response = await api.get("/pescadores/registros/total");
       setTotalFiliados(response.data.count);
     }
+    //
     async function getTotalMensal() {
       const response = await api.get("/guias/totalMensal");
       setTotalMensal(response.data.totalMonth);
