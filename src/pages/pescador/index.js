@@ -15,9 +15,8 @@ export default function Pescador(props) {
 
   async function getPescadores() {
     setLoading(true);
-    const entidade_id = localStorage.getItem("entidade_id");
     try {
-      const response = await api.get(`/pescadores/${entidade_id}/page/${page}`);
+      const response = await api.get(`/pescadores/page/${page}`);
       setPescadores(response.data);
       setLoading(false);
     } catch (e) {
@@ -32,9 +31,8 @@ export default function Pescador(props) {
       setPage(p);
     }
     async function getPescadores() {
-      const entidade_id = localStorage.getItem("entidade_id");
       try {
-        const response = await api.get(`/pescadores/${entidade_id}/page/${p}`);
+        const response = await api.get(`/pescadores/page/${p}`);
         setPescadores(response.data);
         setLoading(false);
       } catch (e) {
