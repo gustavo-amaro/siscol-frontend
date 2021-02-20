@@ -15,9 +15,7 @@ export default function Main() {
       setTotalFiliados(response.data.count);
     }
     async function getTotalMensal() {
-      const entidade_id = localStorage.getItem("entidade_id");
-
-      const response = await api.get(`/guias/${entidade_id}/totalMensal`);
+      const response = await api.get("/guias/totalMensal");
       setTotalMensal(response.data.totalMonth);
     }
 

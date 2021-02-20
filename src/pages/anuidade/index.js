@@ -25,11 +25,8 @@ function Anuidade(props) {
   const [loading, setLoading] = useState(false);
 
   async function getAnuidades() {
-    const entidade_id = localStorage.getItem("entidade_id");
     try {
-      const response = await api.get(
-        `/entidades/${entidade_id}/guias/page/${page}`
-      );
+      const response = await api.get(`/guias/page/${page}`);
       setGuias(response.data);
     } catch (e) {
       setToLogin(true);
@@ -42,11 +39,8 @@ function Anuidade(props) {
       setPage(p);
     }
     async function getAnuidades() {
-      const entidade_id = localStorage.getItem("entidade_id");
       try {
-        const response = await api.get(
-          `/entidades/${entidade_id}/guias/page/${p}`
-        );
+        const response = await api.get(`/guias/page/${p}`);
         setGuias(response.data);
         setLoading(false);
       } catch (e) {
