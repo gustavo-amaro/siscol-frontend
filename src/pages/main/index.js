@@ -11,11 +11,7 @@ export default function Main() {
   useEffect(() => {
     document.title = "Principal";
     async function getTotalFiliados() {
-      const entidade_id = localStorage.getItem("entidade_id");
-
-      const response = await api.get(
-        `/pescadores/${entidade_id}/registros/total/`
-      );
+      const response = await api.get("/pescadores/registros/total");
       setTotalFiliados(response.data.count);
     }
     async function getTotalMensal() {
