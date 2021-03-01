@@ -3,10 +3,12 @@ import { FaUser, FaDollarSign, FaBirthdayCake } from "react-icons/fa";
 
 import { Container } from "./styles";
 import api from "../../services/api";
+import { dateFormat } from "../../Utils";
 
 export default function Main() {
   const [totalFiliados, setTotalFiliados] = useState(0);
   const [totalMensal, setTotalMensal] = useState(0);
+  const [aniversarios, setAniversarios] = useState([]);
 
   useEffect(() => {
     document.title = "Principal";
@@ -20,8 +22,15 @@ export default function Main() {
       setTotalMensal(response.data.totalMonth);
     }
 
+    async function getProximosAniversarios() {
+      const aniversarios = (await api.get("/pescadores/proximos/aniversarios"))
+        .data;
+      setAniversarios(aniversarios);
+    }
+
     getTotalFiliados();
     getTotalMensal();
+    getProximosAniversarios();
   }, []);
 
   return (
@@ -64,18 +73,16 @@ export default function Main() {
             <div className="card-content">
               <h2>Próximos aniversários:</h2>
               <span>
-                {/*<table>
+                <table>
                   <tbody>
-                    <tr key={1}>
-                      <td>José Pereira</td>
-                      <td>20/04/2020</td>
-                    </tr>
-                    <tr key={2}>
-                      <td>Vicente da Silva</td>
-                      <td>25/04/2020</td>
-                    </tr>
+                    {aniversarios.map((pescador) => (
+                      <tr key={pescador.id}>
+                        <td>{pescador.nome}</td>
+                        <td>{dateFormat(pescador.nascimento).substr(0, 5)}</td>
+                      </tr>
+                    ))}
                   </tbody>
-                </table>*/}
+                </table>
               </span>
             </div>
           </div>
