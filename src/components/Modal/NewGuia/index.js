@@ -65,7 +65,8 @@ function NewGuia() {
   };
 
   async function loadOptions(inputValue, callback) {
-    const fishers = (await api.get(`/pescadores/nome/${inputValue}`)).data;
+    const fishers = (await api.get(`/pescadores/nome/${inputValue}`)).data
+      .pescadores;
     const options = [];
     if (Array.isArray(fishers)) {
       fishers.forEach((fisher) => {

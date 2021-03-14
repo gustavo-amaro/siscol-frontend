@@ -38,14 +38,6 @@ function Anuidade(props) {
     currentPage: 1,
   });
 
-  async function getAnuidades() {
-    try {
-      const response = await api.get(`/guias/page/${page}`);
-      setGuias(response.data);
-    } catch (e) {
-      setToLogin(true);
-    }
-  }
   useEffect(() => {
     async function getAnuidades() {
       try {
@@ -99,7 +91,7 @@ function Anuidade(props) {
     e.preventDefault();
     try {
       await api.delete(`/guias/${idGuia}`);
-      getAnuidades();
+      props.history.push(`/anuidade?page=${page}`);
     } catch (e) {
       setToLogin(true);
     }
