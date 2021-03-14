@@ -45,7 +45,7 @@ export default function Topbar() {
               className="dropdown-trigger text-color"
               data-target="dropdownUser"
             >
-              {userName} <FaUser />
+              {userName.split(" ")[0]} <FaUser />
             </a>
           </li>
         </ul>

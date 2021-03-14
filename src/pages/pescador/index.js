@@ -18,7 +18,7 @@ import queryString from "query-string";
 import api from "../../services/api";
 import { dateFormat } from "../../Utils";
 import ModalExcluir from "../../components/Modal/Excluir";
-import { Container, FormSearch } from "./styles";
+import { Container, FormSearch, PaginationInfo } from "./styles";
 
 export default function Pescador(props) {
   const [page, setPage] = useState(1);
@@ -114,7 +114,10 @@ export default function Pescador(props) {
         <FaPlusSquare /> Novo pescador
       </Link>
       <div className="card animate table-rounded">
-        <div className="card-head secondary table-rounded">
+        <div
+          style={{ display: "flex", justifyContent: "space-between" }}
+          className="card-head secondary table-rounded"
+        >
           <FormSearch onSubmit={getPescadoresByNome}>
             <input
               type="text"
@@ -128,6 +131,12 @@ export default function Pescador(props) {
               <FaSearch />
             </button>
           </FormSearch>
+          <PaginationInfo>
+            <span style={{ marginRight: 20 }}>
+              Página: {pagination.currentPage}/{pagination.pageCount}
+            </span>
+            <span>{pagination.itemCount} Resultados</span>
+          </PaginationInfo>
         </div>
         <table className="striped">
           <thead>

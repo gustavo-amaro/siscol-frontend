@@ -22,3 +22,10 @@ export const FormSearch = styled.form`
     }
   }
 `;
+
+export const PaginationInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+`;
