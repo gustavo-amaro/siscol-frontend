@@ -68,6 +68,20 @@ export default createGlobalStyle`
   .backcolor{
     background: var(--backcolor);
   }
+  .pagination li.active {
+    background-color: var(--primary);
+  }
+
+  .pagination li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .pagination{
+    padding-bottom: 5px;
+  }
 }
 
 `;
