@@ -31,6 +31,7 @@ export default function Pescador(props) {
     pages: 0,
     currentPage: 1,
   });
+  const [search, setSearch] = useState(false);
 
   const getPescadores = useCallback(async (page) => {
     try {
@@ -52,20 +53,42 @@ export default function Pescador(props) {
   useEffect(() => {
     const values = queryString.parse(props.location.search);
     let p = values.page;
+    const search = values.search;
     if (p) {
       setPage(p);
     }
+    setSearch(search);
   }, [props.location.search]);
 
   useEffect(() => {
-    getPescadores(page);
-  }, [page, getPescadores]);
+    if (!search) getPescadores(page);
+  }, [page, getPescadores, search]);
+
+  useEffect(() => {
+    async function getPescadorByName() {
+      setLoading(true);
+
+      const data = (await api.get(`/pescadores/nome/${search}?page=${page}`))
+        .data;
+      setPescadores(data.pescadores);
+      setPagination({
+        itemCount: data.itemCount,
+        pageCount: data.pageCount,
+        pages: data.pages,
+        currentPage: data.currentPage,
+      });
+      setLoading(false);
+    }
+    if (search) {
+      getPescadorByName();
+    }
+  }, [search, page]);
 
   async function deletePescador(e) {
     e.preventDefault();
     try {
       await api.delete(`/pescadores/${idPescador}`);
-      getPescadores();
+      props.history.push(`/pescador`);
     } catch (e) {
       setToLogin(true);
     }
@@ -75,10 +98,9 @@ export default function Pescador(props) {
 
   async function getPescadoresByNome(e) {
     e.preventDefault();
-    setLoading(true);
-    const pescadores = (await api.get(`/pescadores/nome/${nomePescador}`)).data;
-    setPescadores(pescadores);
-    setLoading(false);
+    setPage(1);
+    if (nomePescador === "") return props.history.push(`/pescador`);
+    return props.history.push(`/pescador?search=${nomePescador}`);
   }
 
   if (toLogin) {
@@ -156,6 +178,11 @@ export default function Pescador(props) {
           pageCount={parseInt(pagination.pageCount)}
           totalItemsCount={parseInt(pagination.itemCount)}
           onChange={(page) => {
+            if (search)
+              return props.history.push(
+                `/pescador?page=${page}&search=${search}`
+              );
+
             props.history.push(`/pescador?page=${page}`);
           }}
           marginPagesDisplayed={2}
