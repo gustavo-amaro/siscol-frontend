@@ -8,6 +8,7 @@ export default createGlobalStyle`
     --secondary-light: #a4bfed;
     --danger: #d32121;
     --success: #27B54B;
+    --warning: #f4b400;
     --backcolor: #dde3ed;
   }
 
@@ -45,6 +46,14 @@ export default createGlobalStyle`
   }
   .primary-dark {
     background-color: var(--primary-dark);
+  }
+  .success{
+    background-color: var(--success);
+    color: white;
+  }
+  .warning{
+    background-color: var(--warning);
+    color: #fff;
   }
   .border-secondary {
     border-color: #009688;

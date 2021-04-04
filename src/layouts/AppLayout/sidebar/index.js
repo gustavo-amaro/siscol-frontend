@@ -77,9 +77,9 @@ export default function Sidebar() {
           </Item>
         </li>
 
-        <li>
-          <Item active={location.pathname === "/compra-pescado"}>
-            <Link to="/compra-pescado">
+        {/*<li>
+          <Item active={location.pathname === "/caixa"}>
+            <Link to="/caixa">
               <FaShoppingCart
                 size={14}
                 style={{ marginRight: 8 }}
@@ -88,7 +88,7 @@ export default function Sidebar() {
               <span>Caixa</span>
             </Link>
           </Item>
-        </li>
+        </li>*/}
 
         <li>
           <Item>

@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import Auth from "./PrivateRoute/Auth";
 import Anuidade from "../pages/anuidade";
 import ShowGuia from "../pages/anuidade/ShowGuia";
+import Caixa from "../pages/Caixa";
 
 const Routes = () => (
   <Auth>
@@ -45,6 +46,7 @@ const Routes = () => (
       <PrivateRoute exact path="/ver-pescador/:id" component={FisherInfo} />
       <PrivateRoute exact path="/anuidade" component={Anuidade} />
       <PrivateRoute exact path="/ver-guia/:id" component={ShowGuia} />
+      <PrivateRoute exact path="/caixa" component={Caixa} />
       <PrivateRoute path="*" component={Erro404} />
     </Switch>
   </Auth>

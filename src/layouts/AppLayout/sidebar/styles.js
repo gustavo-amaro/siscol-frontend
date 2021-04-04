@@ -38,7 +38,6 @@ export const Container = styled.div`
   li {
     display: flex;
     padding: 7px;
-    padding-left: 15px;
     transition: all 0.4s;
     font-size: 12pt;
     width: 100%;
