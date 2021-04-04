@@ -11,7 +11,6 @@ export default function Main() {
   const [aniversarios, setAniversarios] = useState([]);
 
   useEffect(() => {
-    document.title = "Principal";
     async function getTotalFiliados() {
       const response = await api.get("/pescadores/registros/total");
       setTotalFiliados(response.data.count);

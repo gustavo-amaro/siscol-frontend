@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import "../../../animations.scss";
 
 export const Container = styled.div`
@@ -44,10 +44,6 @@ export const Container = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
-    &:hover {
-      background: rgba(0, 0, 0, 0.2);
-      color: #fff;
-    }
     a {
       width: 100%;
       color: #b8c7ce;
@@ -62,9 +58,20 @@ export const Container = styled.div`
       animation-duration: 400ms;
       animation-fill-mode: forwards;
     }
-    .item {
-      width: 100px;
-    }
   }
-}
+`;
+
+export const Item = styled.div`
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: ${(props) =>
+    props.active ? "rgba(0, 0, 0, 0.2)" : "tranparent"};
+  span {
+    color: ${(props) => props.active && "#fff"};
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
 `;
