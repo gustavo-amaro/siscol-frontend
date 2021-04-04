@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { Container, Item } from "./styles";
-import {
-  FaHome,
-  FaSwimmer,
-  FaMoneyCheckAlt,
-  FaChartBar,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaHome, FaSwimmer, FaMoneyCheckAlt, FaChartBar } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
