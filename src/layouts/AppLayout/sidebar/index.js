@@ -19,6 +19,7 @@ export default function Sidebar() {
       sidebar.style.animationFillMode = "forwards";
     }
   }, [show]);
+
   useEffect(() => {
     let sidebar = document.querySelector(".sidebar");
     sidebar.addEventListener("animationend", (event) => {
@@ -26,8 +27,8 @@ export default function Sidebar() {
         sidebar.style.display = "none";
       }
     });
-    console.log(location);
   }, []);
+
   return (
     <Container className="sidebar primary">
       <div className="brand primary">
