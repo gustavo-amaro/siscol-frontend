@@ -52,7 +52,7 @@ export default function Sidebar() {
         </li>
 
         <li>
-          <Item active={location.pathname === "/pescador"}>
+          <Item active={location.pathname.includes("pescador")}>
             <Link to="/pescador">
               <FaSwimmer size={14} style={{ marginRight: 8 }} color="#fff" />{" "}
               <span>Pescador</span>
@@ -60,7 +60,12 @@ export default function Sidebar() {
           </Item>
         </li>
         <li>
-          <Item active={location.pathname === "/anuidade"}>
+          <Item
+            active={
+              location.pathname === "/anuidade" ||
+              location.pathname.substr(0, 9) === "/ver-guia"
+            }
+          >
             <Link to="/anuidade">
               <FaMoneyCheckAlt
                 size={14}

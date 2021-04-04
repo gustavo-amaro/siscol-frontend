@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Container, FormSearch } from "./styles";
 import {
-  FaEdit,
   FaEye,
   FaTrash,
   FaSearch,
@@ -93,7 +92,7 @@ function Anuidade(props) {
       await api.delete(`/guias/${idGuia}`);
       props.history.push(`/anuidade?page=${page}`);
     } catch (e) {
-      setToLogin(true);
+      //setToLogin(true);
     }
   }
 
@@ -166,9 +165,6 @@ function Anuidade(props) {
                 <td>
                   <Link className="btn blue" to={"/ver-guia/" + guia.id}>
                     <FaEye />
-                  </Link>
-                  <Link className="btn green" to={`/editar-guia/${guia.id}`}>
-                    <FaEdit />
                   </Link>
                   <a
                     className="btn red modal-trigger"

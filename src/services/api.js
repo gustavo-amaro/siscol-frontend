@@ -12,4 +12,20 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  async (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("_token");
+      window.location.href = "/login";
+      const requestConfig = error.config;
+      return axios(requestConfig);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;

@@ -10,7 +10,7 @@ import {
   FaForward,
   FaBackward,
 } from "react-icons/fa";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import Pagination from "react-js-pagination";
 import queryString from "query-string";
@@ -24,7 +24,6 @@ export default function Pescador(props) {
   const [page, setPage] = useState(1);
   const [pescadores, setPescadores] = useState([]);
   const [idPescador, setIdPescador] = useState(0);
-  const [toLogin, setToLogin] = useState(false);
   const [pagination, setPagination] = useState({
     itemCount: 0,
     pageCount: 0,
@@ -46,7 +45,7 @@ export default function Pescador(props) {
       });
       setLoading(false);
     } catch (e) {
-      setToLogin(true);
+      //setToLogin(true);
     }
   }, []);
 
@@ -90,7 +89,7 @@ export default function Pescador(props) {
       await api.delete(`/pescadores/${idPescador}`);
       props.history.push(`/pescador`);
     } catch (e) {
-      setToLogin(true);
+      //setToLogin(true);
     }
   }
   const [nomePescador, setNomePescador] = useState("");
@@ -103,9 +102,6 @@ export default function Pescador(props) {
     return props.history.push(`/pescador?search=${nomePescador}`);
   }
 
-  if (toLogin) {
-    return <Redirect to="/login" />;
-  }
   return (
     <Container className="container-fluid">
       <h2>Pescador</h2>

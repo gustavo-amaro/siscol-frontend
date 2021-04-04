@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   Container,
@@ -10,14 +10,9 @@ import {
 } from "./styles";
 
 import api from "../../services/api";
-import { useState } from "react";
-import checkIsAuthenticated from "../../routes/PrivateRoute/checkIsAuthenticated";
-import { Redirect } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 
 export default function Login() {
-  const [toMain, setToMain] = useState(false);
-
   async function handleSubmitLogin(e) {
     e.preventDefault();
     const data = {
@@ -36,26 +31,13 @@ export default function Login() {
       window.location.href = "/";
     }
   }
-
-  useEffect(() => {
-    const checkAuth = () =>
-      checkIsAuthenticated()
-        .then(() => setToMain(true))
-        .catch(() => setToMain(false));
-
-    const entidade_id = localStorage.getItem("entidade_id");
-    const token = localStorage.getItem("_token");
-    if (entidade_id && token) {
-      checkAuth();
-    }
-  }, []);
-
-  if (toMain) {
-    return <Redirect to="/" />;
-  }
   return (
     <Container>
-      <img id="logo-login" src={require('../../assets/logo-branca.png')} alt='logo siscol'/>
+      <img
+        id="logo-login"
+        src={require("../../assets/logo-branca.png")}
+        alt="logo siscol"
+      />
       <TextLogin>
         O SISCOL é um sistema completo para gestão da sua colônia de pescadores.
         Tenha total controle sobre seus afiliados de forma simples e segura!

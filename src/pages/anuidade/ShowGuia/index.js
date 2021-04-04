@@ -10,9 +10,8 @@ export default function ShowGuia(props) {
 
   useEffect(() => {
     async function loadGuia(id) {
-      const response = await api.get(`/guias/${id}`);
-      console.log(response.data);
-      setGuia(response.data);
+      const guia = (await api.get(`/guias/${id}`)).data;
+      setGuia(guia);
     }
     let idGuia = props.match.params.id;
     loadGuia(idGuia);
