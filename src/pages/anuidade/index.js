@@ -24,7 +24,6 @@ import { PaginationInfo } from "../pescador/styles";
 
 function Anuidade(props) {
   const [guias, setGuias] = useState([]);
-  const [toLogin, setToLogin] = useState(false);
   const [page, setPage] = useState(1);
   const [idGuia, setIdGuia] = useState(null);
   const [nomePescador, setNomePescador] = useState("");
@@ -50,7 +49,7 @@ function Anuidade(props) {
         });
         setLoading(false);
       } catch (e) {
-        setToLogin(true);
+        //setToLogin(true);
       }
     }
     if (!search) getAnuidades();
@@ -81,10 +80,6 @@ function Anuidade(props) {
     }
     if (search) getGuiasByName();
   }, [page, search]);
-
-  if (toLogin) {
-    return <Redirect to="/login" />;
-  }
 
   async function deleteGuia(e) {
     e.preventDefault();
