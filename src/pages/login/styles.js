@@ -6,15 +6,16 @@ const SpinnerAnimation = keyframes`
     transform: rotate(0deg);
   }
   to{
-    transform: rotate(360deg);
+    transform: rotate(360deg);  
   }
 `;
 
-const OpacityAnimation = keyframes`
+const ScaleMacAnimation = keyframes`
   from {
+    transform: scale(1.2);
     opacity: 0;
-  }
-  to: {
+  }to{
+    transform: scale(1);
     opacity: 1;
   }
 `;
@@ -29,11 +30,10 @@ export const Container = styled.div`
   background: ${(props) => props.theme.colors.background};
   flex-wrap: wrap;
   #logo-login {
+    max-width: 253;
+    max-height: 133px;
     position: absolute;
-    top: 10px;
-    left: 0px;
-    max-width: 180px;
-    max-height: 130px;
+    margin-top: -180px;
   }
 `;
 
@@ -45,7 +45,6 @@ export const TextLogin = styled.h1`
   text-align: center;
   margin-right: 5%;
   font-weight: 400;
-  animation: ${OpacityAnimation} 3s;
   animation-delay: 400ms;
   animation-fill-mode: backwards;
 `;
@@ -65,19 +64,8 @@ export const Square = styled.div`
 `;
 
 export const LoginBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 380px;
-  border-radius: 10px;
-  box-shadow: 0 0 1px black;
-  background: rgba(255, 255, 255, 1);
-  backdrop-filter: blur(4px);
-  animation: fade 400ms;
+  animation: ${ScaleMacAnimation} 500ms;
   animation-fill-mode: backwards;
-  animation-delay: 200ms;
-  flex-direction: column;
-  z-index: 2;
 `;
 
 export const FooterBox = styled.div`
@@ -92,6 +80,9 @@ export const FooterBox = styled.div`
   box-shadow: 0 0 1px black;
   padding: 10px;
   margin-top: 20px;
+  animation: ${ScaleMacAnimation} 300ms;
+  animation-fill-mode: backwards;
+  animation-delay: 500ms;
   span {
     font-size: 15px;
     text-align: center;

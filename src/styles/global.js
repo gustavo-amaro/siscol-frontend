@@ -19,6 +19,9 @@ body{
   height: 50px;
   border-radius: 10px;
   width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary{
@@ -30,6 +33,11 @@ body{
   }
   &:active{
     background-color: ${(props) => props.theme.colors.primary};
+    border-color: ${(props) => props.theme.colors.primary};
+  }
+  &:disabled{
+    background-color: ${(props) => props.theme.colors.primary};
+    border-color: ${(props) => props.theme.colors.primary};
   }
 }
 
@@ -48,6 +56,10 @@ body{
 
 .secondary{
   background-color: ${(props) => props.theme.colors.text};
+}
+
+.alert{
+  border-radius: 10px;
 }
 
 .App {

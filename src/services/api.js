@@ -17,6 +17,9 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (error.config.url === "/users/authenticate")
+      return Promise.reject(error);
+
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("_token");
       window.location.href = "/login";
