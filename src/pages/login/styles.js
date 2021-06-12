@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import "../../animations.scss";
 
-
 const SpinnerAnimation = keyframes`
   from {
     transform: rotate(0deg);
@@ -27,13 +26,13 @@ export const Container = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(var(--primary), var(--primary-dark));
-  flex-wrap: wrap-reverse;
-  #logo-login{
+  background: ${(props) => props.theme.colors.background};
+  flex-wrap: wrap;
+  #logo-login {
     position: absolute;
     top: 10px;
     left: 0px;
-    max-width: 180px; 
+    max-width: 180px;
     max-height: 130px;
   }
 `;
@@ -41,7 +40,7 @@ export const Container = styled.div`
 export const TextLogin = styled.h1`
   color: white;
   font-size: 24px;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   width: 45%;
   text-align: center;
   margin-right: 5%;
@@ -54,14 +53,14 @@ export const TextLogin = styled.h1`
 export const Square = styled.div`
   width: 70px;
   height: 70px;
-  background: rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, 0.6);
   position: absolute;
   animation: ${SpinnerAnimation} 3s infinite;
-  ${props=>props.right&&'right: '+props.right+'px;'}
-  ${props=>props.left&&'left: '+props.left+'px;'}
-  ${props=>props.top&&'top: '+props.top+'px;'}
-  ${props=>props.bottom&&'bottom: '+props.bottom+'px;'}
-  animation-delay: ${props=>props.delay?props.delay+'ms': '50ms'};
+  ${(props) => props.right && "right: " + props.right + "px;"}
+  ${(props) => props.left && "left: " + props.left + "px;"}
+  ${(props) => props.top && "top: " + props.top + "px;"}
+  ${(props) => props.bottom && "bottom: " + props.bottom + "px;"}
+  animation-delay: ${(props) => (props.delay ? props.delay + "ms" : "50ms")};
   animation-timing-function: linear;
 `;
 
@@ -69,7 +68,7 @@ export const LoginBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 320px;
+  height: 380px;
   border-radius: 10px;
   box-shadow: 0 0 1px black;
   background: rgba(255, 255, 255, 1);
@@ -82,23 +81,20 @@ export const LoginBox = styled.div`
 `;
 
 export const FooterBox = styled.div`
-display: flex;
-  width: 100%;
+  display: flex;
+  width: 380px;
   height: 70px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-radius: 8px;
+  color: white;
   box-shadow: 0 0 1px black;
   padding: 10px;
-  color: #fff;
+  margin-top: 20px;
   span {
     font-size: 15px;
     text-align: center;
-    a{
-      color: #682ab5;
-    }
   }
 `;
 export const Form = styled.form`
@@ -106,13 +102,13 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 320px;
+  width: 380px;
   height: 100%;
-  .button-submit{
+  .button-submit {
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    button{
+    button {
       width: 67px;
       height: 53px;
       font-size: 22px;

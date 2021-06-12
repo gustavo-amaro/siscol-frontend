@@ -1,16 +1,9 @@
 import React from "react";
 
-import {
-  Container,
-  LoginBox,
-  Form,
-  FooterBox,
-  TextLogin,
-  Square,
-} from "./styles";
+import { Container, Form, FooterBox } from "./styles";
 
 import api from "../../services/api";
-import { FaArrowRight } from "react-icons/fa";
+import { FaLock, FaUser } from "react-icons/fa";
 
 export default function Login() {
   async function handleSubmitLogin(e) {
@@ -38,51 +31,57 @@ export default function Login() {
         src={require("../../assets/logo-branca.png")}
         alt="logo siscol"
       />
-      <TextLogin>
-        O SISCOL é um sistema completo para gestão da sua colônia de pescadores.
-        Tenha total controle sobre seus afiliados de forma simples e segura!
-      </TextLogin>
-      <LoginBox>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Form onSubmit={handleSubmitLogin}>
-          <div className="input-field" style={{ width: "75%", marginTop: 50 }}>
+          <div className="mb-3 input-group">
+            <span class="input-group-text" id="basic-addon1">
+              <FaUser />
+            </span>
             <input
               id="first_name"
+              className="form-control"
               name="email"
               type="text"
               autoComplete="off"
+              placeholder="E-mail"
             />
-            <label htmlFor="first_name">Email</label>
           </div>
-          <div className="input-field" style={{ width: "75%" }}>
-            <input id="last_name" name="password" type="password" />
-            <label htmlFor="last_name">Senha</label>
+          <div className="mb-3 input-group">
+            <span className="input-group-text">
+              <FaLock />
+            </span>
+            <input
+              id="last_name"
+              name="password"
+              className="form-control"
+              type="password"
+              placeholder="Senha"
+            />
           </div>
-          <div className="button-submit">
-            <button
-              type="submit"
-              className="btn secondary border-radius"
-              title="Fazer login"
-            >
-              <FaArrowRight />
-            </button>
-          </div>
+
+          <button
+            style={{ width: "100%", fontSize: 24 }}
+            type="submit"
+            className="btn btn-primary"
+            title="Fazer login"
+          >
+            Entrar
+          </button>
         </Form>
-        <FooterBox className="secondary">
+        <FooterBox id="kadjflaj" className="secondary">
           <span>
             Não possui uma conta?
             <br />
             Registre-se gratuitamente.
           </span>
         </FooterBox>
-      </LoginBox>
-
-      <Square top={170} left={350} delay={100} />
-      <Square top={330} left={50} delay={150} />
-      <Square bottom={100} left={400} delay={50} />
-      <Square top={80} right={150} delay={250} />
-      <Square top={100} right={400} delay={250} />
-      <Square bottom={50} right={200} delay={200} />
-      <Square bottom={20} right={600} delay={300} />
+      </div>
     </Container>
   );
 }

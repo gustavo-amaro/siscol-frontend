@@ -1,6 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
+body{
+  font-family: Ubuntu, sans-serif;
+  color: ${(props) => props.theme.colors.text}
+}
 :root{
     --primary: #2c77f2;
     --primary-dark: #163d7d;
@@ -11,11 +15,40 @@ export default createGlobalStyle`
     --warning: #f4b400;
     --backcolor: #dde3ed;
   }
+.btn{
+  height: 50px;
+  border-radius: 10px;
+  width: 120px;
+}
 
-  .secondary{
-    background: var(--secondary);
-    color: #fff;
+.btn-primary{
+  background-color: ${(props) => props.theme.colors.primary};
+  border-color: ${(props) => props.theme.colors.primary};
+  &:hover{
+    background-color: ${(props) => props.theme.colors.primary};
+    border-color: ${(props) => props.theme.colors.primary};
   }
+  &:active{
+    background-color: ${(props) => props.theme.colors.primary};
+  }
+}
+
+.form-control{
+  border-radius: 10px;
+  height: 50px;
+  font-size: 18px;
+}
+
+.input-group-text{
+  border-radius: 10px 0 0 10px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.secondary{
+  background-color: ${(props) => props.theme.colors.text};
+}
 
 .App {
   position: absolute;
@@ -41,42 +74,7 @@ export default createGlobalStyle`
     padding: 0 20px;
     box-sizing: border-box;
   }
-  .primary {
-    background: linear-gradient(to right, var(--primary), var(--primary-dark))!important;
-  }
-  .primary-dark {
-    background-color: var(--primary-dark);
-  }
-  .success{
-    background-color: var(--success);
-    color: white;
-  }
-  .warning{
-    background-color: var(--warning);
-    color: #fff;
-  }
-  .border-secondary {
-    border-color: #009688;
-    color: #009688;
-  }
-  .border-purple {
-    border-color: #9c27b0;
-    color: #9c27b0;
-  }
-  .border-primary {
-    border-color: var(--primary);
-    color: var(----primary);
-  }
-  .border-blue {
-    border-color: #0892c9;
-    color: #0892c9;
-  }
-  .border-radius{
-    border-radius: 10px;
-  }
-  .backcolor{
-    background: var(--backcolor);
-  }
+  
   .pagination li.active {
     background-color: var(--primary);
   }
