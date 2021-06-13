@@ -1,24 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import "../../animations.scss";
-
-const SpinnerAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to{
-    transform: rotate(360deg);  
-  }
-`;
-
-const ScaleMacAnimation = keyframes`
-  from {
-    transform: scale(1.2);
-    opacity: 0;
-  }to{
-    transform: scale(1);
-    opacity: 1;
-  }
-`;
+import styled from "styled-components";
+import { ScaleMacAnimation } from "../../styles/animations";
 
 export const Container = styled.div`
   display: flex;
@@ -47,20 +28,6 @@ export const TextLogin = styled.h1`
   font-weight: 400;
   animation-delay: 400ms;
   animation-fill-mode: backwards;
-`;
-
-export const Square = styled.div`
-  width: 70px;
-  height: 70px;
-  background: rgba(255, 255, 255, 0.6);
-  position: absolute;
-  animation: ${SpinnerAnimation} 3s infinite;
-  ${(props) => props.right && "right: " + props.right + "px;"}
-  ${(props) => props.left && "left: " + props.left + "px;"}
-  ${(props) => props.top && "top: " + props.top + "px;"}
-  ${(props) => props.bottom && "bottom: " + props.bottom + "px;"}
-  animation-delay: ${(props) => (props.delay ? props.delay + "ms" : "50ms")};
-  animation-timing-function: linear;
 `;
 
 export const LoginBox = styled.div`

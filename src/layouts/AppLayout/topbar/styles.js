@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.nav`
     padding: 34px;
-    
+    background-color: ${props => props.theme.colors.background}!important;
     .navbar-brand{
         color: ${props => props.theme.colors.text};
     }

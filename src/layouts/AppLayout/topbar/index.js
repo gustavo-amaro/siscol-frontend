@@ -5,7 +5,7 @@ import M from "materialize-css";
 import { Redirect } from "react-router-dom";
 import { Container } from "./styles";
 
-export default function Topbar({title='Recolhimento de Anuidade'}) {
+export default function Topbar({title=''}) {
   //const dispatch = useDispatch();
   const [toLogin, setToLogin] = useState(false);
   const userName = localStorage.getItem("user_name");

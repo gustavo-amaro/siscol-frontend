@@ -1,14 +1,13 @@
 import React from "react";
 import TopBar from "./topbar";
 
+import {Container} from './styles'
 function Template({ children }) {
   return (
-    <div className="App">
+    <Container>
       <TopBar />
-      <div className="content">
-        <div className="main-content">{children}</div>
-      </div>
-    </div>
+      {children}
+    </Container>
   );
 }
 

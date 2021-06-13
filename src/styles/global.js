@@ -65,6 +65,15 @@ body{
 .dropdown-menu{
   border-radius: 10px;
 }
-.App {
+.bg-light{
+  background-color: ${props => props.theme.colors.background};
+}
+
+.logo-bottom{
+  width: 153px;
+  height: 80px;
+  bottom: 0;
+  left: -25px;
+  position: absolute;
 }
 `;
