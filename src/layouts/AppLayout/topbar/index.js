@@ -4,11 +4,13 @@ import M from "materialize-css";
 //import { useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container } from "./styles";
+import { useAppLayout } from "../../../contexts/AppLayoutContext";
 
 export default function Topbar({title=''}) {
   //const dispatch = useDispatch();
   const [toLogin, setToLogin] = useState(false);
   const userName = localStorage.getItem("user_name");
+  const layoutContext = useAppLayout();
 
   useEffect(() => {
     var elems = document.querySelectorAll(".dropdown-trigger");
@@ -29,10 +31,14 @@ export default function Topbar({title=''}) {
     return <Redirect to="/login" />;
   }
 
+  function onMenuClick(e){
+    e.preventDefault();
+    layoutContext.toggleShowSidebar();
+  }
   return (
     <Container className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/"><FaBars /></a>
+        <a className="navbar-brand" href="/" onClick={onMenuClick}><FaBars /></a>
         
         <h1 className="nav-center">{title}</h1>
 

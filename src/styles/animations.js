@@ -9,3 +9,19 @@ export const ScaleMacAnimation = keyframes`
     opacity: 1;
   }
 `;
+
+export const OpacityAnimation = keyframes`
+  from {
+    opacity: 0;
+  }to{
+    opacity: 1;
+  }
+`;
+
+export const OpacityHideAnimation = keyframes`
+  from {
+    opacity: 1;
+  }to{
+    opacity: 0;
+  }
+`;
