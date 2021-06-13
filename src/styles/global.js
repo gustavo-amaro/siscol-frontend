@@ -62,45 +62,9 @@ body{
   border-radius: 10px;
 }
 
-.App {
-  position: absolute;
-  display: flex;
-  min-height: 100%;
-  width: 100%;
-  color: #4a4a4a;
-  .text-color{
-    color: #4a4a4a;
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    background: var(--backcolor);
-  }
-  .main-content {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-  
-  .pagination li.active {
-    background-color: var(--primary);
-  }
-
-  .pagination li a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
-  .pagination{
-    padding-bottom: 5px;
-  }
+.dropdown-menu{
+  border-radius: 10px;
 }
-
+.App {
+}
 `;

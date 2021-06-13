@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FaUser, FaBars, FaCog, FaDoorOpen } from "react-icons/fa";
+import { FaUser, FaBars, FaDoorOpen } from "react-icons/fa";
 import M from "materialize-css";
-import { useDispatch } from "react-redux";
+//import { useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Container } from "./styles";
 
-export default function Topbar() {
-  const dispatch = useDispatch();
+export default function Topbar({title='Recolhimento de Anuidade'}) {
+  //const dispatch = useDispatch();
   const [toLogin, setToLogin] = useState(false);
   const userName = localStorage.getItem("user_name");
 
@@ -13,10 +14,10 @@ export default function Topbar() {
     var elems = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(elems, { constrainWidth: false });
   }, []);
-  function toggleSidebar(e) {
+  /*function toggleSidebar(e) {
     e.preventDefault();
     dispatch({ type: "TOGGLE_SIDEBAR" });
-  }
+  }*/
 
   function signoff() {
     localStorage.removeItem("entidade_id");
@@ -29,40 +30,28 @@ export default function Topbar() {
   }
 
   return (
-    <nav>
-      <div className="nav-wrapper white">
-        <ul id="nav-mobile" className="left">
-          <li>
-            <a href="sidebar" className="text-color" onClick={toggleSidebar}>
-              <FaBars />
+    <Container className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="/"><FaBars /></a>
+        
+        <h1 className="nav-center">{title}</h1>
+
+        <div className="dropdown">
+          <div className="user dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <div className="me-auto"></div>
+            <a href="#!">
+              {userName?.split(" ")[0]}
             </a>
-          </li>
-        </ul>
-        <ul id="nav-mobile" className="right">
-          <li>
-            <a
-              href="#!"
-              className="dropdown-trigger text-color"
-              data-target="dropdownUser"
-            >
-              {userName?.split(" ")[0]} <FaUser />
-            </a>
-          </li>
-        </ul>
+            <FaUser />
+          </div>
+
+          <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+            <li><button className="dropdown-item" onClick={signoff}><FaDoorOpen style={{marginRight: 5 }} /> Sair</button></li>
+          </ul>
+        </div>
+
+        
       </div>
-      <ul id="dropdownUser" className="dropdown-content">
-        <li>
-          <a href="#!" className="blue-text">
-            <FaCog /> Configurações
-          </a>
-        </li>
-        <li className="divider" tabIndex="-1"></li>
-        <li>
-          <a href="#!" className="blue-text" onClick={signoff}>
-            <FaDoorOpen /> Sair
-          </a>
-        </li>
-      </ul>
-    </nav>
+    </Container>
   );
 }
